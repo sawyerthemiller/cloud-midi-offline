@@ -8,4 +8,7 @@
 ## Features
 - ✅ Fully offline MIDI playback  
 - ✅ Responsive and intuitive UI  
-- ✅ Lightweight and fast  
+- ✅ Lightweight and fast
+
+## Warnings
+This must be hosted with a web server of sorts. Just opening the html files will not work. I recommend HFS by rejetto.
