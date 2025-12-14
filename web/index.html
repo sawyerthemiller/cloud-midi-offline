@@ -557,12 +557,12 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 		</table>
 	</div>
 	<script>
-		var CLIENT_ID = '969278067580-9od198q74kvmqhg66rm2t9bmj5kiim7f.apps.googleusercontent.com';
+		var CLIENT_ID = '';
 		var SCOPES = [
 			'https://www.googleapis.com/auth/drive.install',
 			'https://www.googleapis.com/auth/drive.file'
 		];
-		var gd_developerKey = 'AIzaSyBxOHbrnJGfBxEuuYCv8DREfH4k1UXQrbc';
+		var gd_developerKey = '';
 		var gd_mimetype = "audio/midi,application/x-midi,audio/x-mid,audio/x-midi,x-music/x-midi,music/crescendo,audio/x-mod"; //application/octet-stream
 		var gd_export_extension = [];
 		var gd_state = '';
@@ -1259,6 +1259,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 			});
 		}
 		function gd_init() {
+			return;
 			//if(getstorage('c_scansub')=='true')_getid('c_scansub').checked=true;
 			//if(getstorage('c_addonly')=='true')_getid('c_addonly').checked=true;	
 			gd_dblclick();
@@ -1335,6 +1336,11 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 		var audioctx = window.AudioContext || window.webkitAudioContext;
 		var gdowntime = (new Date()).getTime();
 		var Module = {
+			locateFile: function (path, prefix) {
+				if (path.indexOf("wildwebmidi2.data") > -1) return "midi/wildwebmidi2.data";
+				if (path.indexOf("wildwebmidi2.js.mem") > -1) return "midi/wildwebmidi2.js.mem";
+				return (prefix || '') + path;
+			},
 			setStatus: function (text) {
 				if (!audioctx) return;
 				if (!isReady1) {
