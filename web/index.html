@@ -740,7 +740,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 		}
 		function gd_loadfiles(docs) {
 			if (gadb) { alert('Please disable the adblock for free use.'); return; } if (gd_isdownloading) {
-				alert("It's working... Please try again later.");
+				alert("The remote file is not downloaded yet.");
 				return;
 			}
 
@@ -1731,7 +1731,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 			function f_download(callback, fdata) {
 				var resp = fdata.resp;
 				if (gd_isdownloading) {
-					alert("It's working... Please try again later.");
+					alert("The remote file is not downloaded yet.");
 					return;
 				}
 
@@ -1985,7 +1985,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 				return;
 			}
 			if (gd_isdownloading) {
-				alert("It's working. Please try again later.");
+				alert("The remote file is not downloaded yet.");
 				return;
 			}
 
@@ -2136,7 +2136,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 						_convert_errcallback('<font class=error>Error. This browser does not support the MSCZ processing.</font>');
 						return;
 					}
-					//if(gworking){alert("It's working... Please try again later.");return;}
+
 					function go2() {
 						gworking = true;
 						_getid("wml").innerHTML = 'Creating a MIDI file... Please wait a moment.';
