@@ -1,0 +1,2477 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:11:52 GMT -->
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Cloud MIDI Player</title>
+	<meta name="description"
+		content="This app is Standard MIDI File Player. Now you can play Standard MIDI File with your browser. Supports mid files, MIDI-like (kar, hmi, hmp, mus, xmi, mmp, mmpz, mscz, abc), and Module Music (mod, xm, s3m, it, vgm/vgz/nsf game music) formats. Even if you do not own any external MIDI Device, this app support Web MIDI which is tone generator build on top of Web Audio API.">
+	<meta name="keywords"
+		content="midi player, online midi player, midi player for google drive, html5 midi player, web midi player, kar player online, hmi player online, hmp player online, mus player online, xmi player online, mod player online, xm player online, s3m player online, online vgm player, vgz player, game sound midi player, mmp player, mmpz player, mmp to midi, lmms to midi, nsf player, online nsf nintendo music player, mscz player, mscz to midi, musicxml to midi, adlib to midi">
+
+	<meta property="og:title" content="Cloud MIDI Player">
+	<meta property="og:description"
+		content="This app is Standard MIDI File Player. Now you can play Standard MIDI File with your browser. Supports mid files, MIDI-like (kar, hmi, hmp, mus, xmi, mmp, mmpz, mscz, abc), and Module Music (mod, xm, s3m, it, vgm/vgz/nsf game music) formats. Even if you do not own any external MIDI Device, this app support Web MIDI which is tone generator build on top of Web Audio API.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="//midiplayer.ehubsoft.net/">
+	<meta property="og:image" content="img/logo128.png">
+
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<head>
+		<style>
+			body,
+			table,
+			td,
+			span,
+			select,
+			input,
+			textarea,
+			button {
+				font-size: 14px;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+			}
+
+			body {
+				background: #e3e3e3;
+			}
+
+			A:link {
+				color: #0860A8;
+				text-decoration: none;
+			}
+
+			A:visited {
+				color: #0860A8;
+				text-decoration: none;
+			}
+
+			A:active {
+				color: #0860A8;
+				text-decoration: underline;
+			}
+
+			A:hover {
+				color: #0860A8;
+				text-decoration: underline;
+			}
+
+			.divopt {
+				-webkit-box-shadow: 0 0 10px #999;
+				-moz-box-shadow: 0 0 10px #999;
+				box-shadow: 0 0 10px #999;
+			}
+
+			.menulink {
+				font-size: 15px;
+			}
+
+			.input {
+				width: 630px;
+			}
+
+			.small {
+				font-size: 13px;
+			}
+
+			.adlibfiles td {
+				font-size: 13px;
+			}
+		</style>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/common.js"></script>
+		<script>
+			var gadb = false;
+			function init() {
+			}
+		</script>
+	</head>
+
+<body onload="init()">
+
+	<table align=center>
+		<tr>
+			<td height=10>
+	</table>
+
+	<table id="maintable" width=820 border=0 align=center class="divopt"
+		style="background-color:white;padding:6px 6px 6px 6px;border: 0px solid #2E79DB;">
+		<tr>
+			<td>
+
+				<table width=100%>
+					<tr>
+						<td><img src="img/logo65.png" width=65>
+						<td>
+						<td><a id="toptitle" href="index.html" title="Go Home" style="color:#1667A0"><span
+									style="font-size:27px;font-family:Verdana, Arial;white-space:nowrap;">Local Web MIDI
+									Player</span></a>
+							<div style="margin-left:2px;margin-top:3px">
+								This app is a Standard MIDI File Player. Now you can play standard MIDI files with your
+								browser.
+							</div>
+				</table>
+
+		<tr>
+			<td>
+				<center>
+					<!-- Ads removed for offline mode -->
+				</center>
+
+		<tr>
+			<td>
+				<textarea id='adlibfiles' style="display:none;width:0px;height:0px">A2M: AdLib Tracker 2 by subz3ro
+ADL: Westwood ADL File Format
+AGD: Herbulot AdLib Gold System (HERAD) by Remi Herbulot (preliminary)
+AMD: AMUSIC Adlib Tracker by Elyssis
+BAM: Bob's Adlib Music Format
+BMF: Easy AdLib 1.0 by The Brain
+CFF: BoomTracker 4.0 by CUD
+CMF: Creative Music File Format by Creative Technology
+CMF: SoundFX Macs Opera tracker by Linel
+D00: EdLib by Vibrants
+DFM: Digital-FM by R.Verhaag
+DMO: Twin TrackPlayer by TwinTeam
+DRO: DOSBox Raw OPL Format
+DTM: DeFy Adlib Tracker by DeFy
+GOT: God Of Thunder Music by Roy Davis of Adept Software
+HA2: Herbulot AdLib System v2 (HERAD) by Remi Herbulot (preliminary)
+HSC: HSC Adlib Composer by Hannes Seifert, HSC-Tracker by Electronic Rats
+HSP: HSC Packed by Number Six / Aegis Corp.
+HSQ: Herbulot AdLib System (HERAD) by Remi Herbulot (preliminary)
+IMF: Apogee IMF File Format
+IMS: IMPlay Song Format
+JBM: JBM Adlib Music Format
+KSM: Ken Silverman's Music Format
+LAA: LucasArts AdLib Audio File Format by LucasArts
+LDS: LOUDNESS Sound System
+M: Origin AdLib Music Format
+MAD: Mlat Adlib Tracker
+MDI: AdLib MIDIPlay File Format by Ad Lib Inc.
+MKJ: MKJamz by M/K Productions (preliminary)
+MSC: AdLib MSCplay
+MTK: MPU-401 Trakker by SuBZeR0
+MUS: AdLib MIDI Music Format by Ad Lib Inc.
+RAD: Reality ADlib Tracker by Reality
+RAW: RdosPlay RAW file format by RDOS
+RIX: Softstar RIX OPL Music Format
+ROL: AdLib Visual Composer by AdLib Inc.
+SA2: Surprise! Adlib Tracker 2 by Surprise! Productions
+SAT: Surprise! Adlib Tracker by Surprise! Productions
+SCI: Sierra's AdLib Audio File Format
+SDB: Herbulot AdLib System (HERAD) by Remi Herbulot (preliminary)
+SNG: SNGPlay by BUGSY of OBSESSION
+SNG: Faust Music Creator by FAUST
+SNG: Adlib Tracker 1.0 by TJ
+SOP: Note Sequencer by Lee Ho Bum (sopepos)
+SQX: Herbulot AdLib System (HERAD) by Remi Herbulot (preliminary)
+XAD: eXotic ADlib Format by Riven the Mage
+XMS: XMS-Tracker by MaDoKaN/E.S.G
+XSM: eXtra Simple Music by Davey W Taylor</textarea>
+				<script>
+					function show_adlibfiles() {
+						var s = trim(_getid('adlibfiles').value);
+						var arr = s.split("\n");
+						var arr2;
+						var s = '<table cellpadding=0 cellspacing=0 class="adlibfiles">';
+						for (var i = 0; i < arr.length; i++) {
+							arr2 = arr[i].split(':');
+							if (arr2.length >= 2) {
+								s += '<tr><td>' + henc(arr2[0]); arr2.splice(0, 1); s += '<td>' + henc(arr2.join(':'));
+							}
+						}
+						s += '</table>';
+						var s1 = '<table><tr><td align=center><a href="#" onclick="hide_message();return false">Close</a><tr><td>' + s + '<tr><td align=center><a href="#" onclick="hide_message();return false">Close</a></table>';
+						show_message(s1, '', '', '', 1000 * 60 * 60);
+					}
+					function get_data() {
+						var s = getstorage("c_filedata3");
+						if (!s) s = "[]";
+						var a = [];
+						try {
+							a = JSON.parse(s);
+						} catch (err) {
+							a = [];
+						}
+						if (!a) a = [];
+						return a;
+					}
+					function proc_savetohistory() {
+						var subject = getstorage('c_lastsubject') || '';
+						subject = prompt("Please enter a title or name.", subject);
+						if (!subject) {
+							//alert('You need to enter the subject.');
+							return;
+						}
+						setstorage('c_lastsubject', subject);
+						var b = {};
+						b.id = (new Date()).getTime();
+						b.subject = subject;
+						b.files = [];
+						var d;
+						for (var i = 0; i <= gd_files.length - 1; i++) {
+							if (!gd_files[i].id || gd_files[i].f) continue;
+							d = {};
+							d.id = gd_files[i].id;
+							d.name = gd_files[i].name;
+							if (gd_files[i].resp) {
+								d.resp = {};
+								d.resp.id = gd_files[i].resp.id;
+								d.resp.title = gd_files[i].resp.title;
+								d.resp.fileSize = gd_files[i].resp.fileSize;
+								d.resp.alternateLink = gd_files[i].resp.alternateLink;
+								d.resp.webContentLink = gd_files[i].resp.webContentLink;
+								//d.resp.parents=gd_files[i].resp.parents;
+							}
+							b.files.push(d);
+						}
+						if (b.files.length == 0) {
+							alert('No files to save. Drive file list can be saved.');
+							return;
+						}
+
+						var a = get_data();
+						a.push(b);
+						if (a.length > 15) a.splice(0, 1);
+						if (window.JSON) setstorage("c_filedata3", JSON.stringify(a));
+
+						proc_displayhistory();
+						var obj = _getid('history');
+						if (obj.options.length >= 2) obj.selectedIndex = 1;
+					}
+					function proc_displayhistory() {
+						var obj = _getid('history');
+						var a = get_data();
+
+						for (var i = obj.options.length - 1; i >= 0; i--) obj.remove(i);
+						var c = document.createElement("option");
+						c.value = '';
+						c.appendChild(document.createTextNode('File History'));
+						obj.appendChild(c);
+
+						var s;
+						for (var i = a.length - 1; i >= 0; i--) {
+							var c = document.createElement("option");
+							c.value = a[i].id;
+							s = a[i].subject + ' (' + datetimetostring(a[i].id) + ')';
+							c.appendChild(document.createTextNode(s));
+							obj.appendChild(c);
+						}
+					}
+
+					function proc_historychange() {
+						var obj = _getid('history');
+						if (!obj.value) return;
+						var a = get_data();
+						for (i = 0; i < a.length; i++) {
+							if (a[i].id == obj.value) {
+								if (a[i].files && a[i].files.length > 0) {
+									attach_clear();
+									var d, s;
+									var obj = _getid("attachment");
+									for (var j = 0; j <= a[i].files.length - 1; j++) {
+										d = a[i].files[j];
+										gd_files_count++;
+										d.idx = gd_files_count;
+										if (!d.resp) {
+											d.resp = {};
+											d.resp.id = d.id;
+											d.resp.title = d.name;
+										}
+										var c = document.createElement("option");
+										s = d.name;
+										if (d.resp.fileSize) s += ' (' + getsize(d.resp.fileSize) + ')';
+										c.value = d.idx;
+										c.appendChild(document.createTextNode(s));
+										obj.appendChild(c);
+										gd_files.push(d);
+									}
+									_getid("downlink").innerHTML = "Add files to the list below.";
+									gd_count();
+								}
+								break;
+							}
+						}
+					}
+					function proc_deletehistory() {
+						var obj = _getid('history');
+						if (!obj.value) return;
+						var a = get_data();
+						for (i = 0; i < a.length; i++) {
+							if (a[i].id == obj.value) {
+								a.splice(i, 1);
+								if (window.JSON) setstorage("c_filedata3", JSON.stringify(a));
+								var idx = obj.selectedIndex;
+								obj.remove(idx);
+								if (idx > obj.options.length - 1) idx = obj.options.length - 1;
+								obj.selectedIndex = idx;
+								break;
+							}
+						}
+					}
+					function proc_clearhistory() {
+						for (i = 1; i <= 2; i++) {
+							var answer = confirm("All stored history will be deleted. [" + i + "/2]" + "\n\n" + "Are you sure?");
+							if (!answer) return;
+						}
+						setstorage("c_filedata3", "[]");
+						var obj = _getid('history');
+						for (var i = obj.options.length - 1; i >= 1; i--) obj.remove(i);
+					}
+
+					function proc_show(name) {
+						var a = _getid(name);
+						if (!a) return;
+						if (a.style.display == '') a.style.display = 'none';
+						else a.style.display = '';
+					}
+				</script>
+
+				<style>
+					.uploaded {
+						color: green;
+					}
+
+					.error {
+						color: #8A0808;
+					}
+
+					.welcome {
+						color: #45616D;
+					}
+
+					.bold1 {
+						color: green;
+					}
+
+					.log {
+						width: 100%;
+						height: 240px;
+					}
+
+					.big1 {
+						font-size: 20px;
+					}
+
+					#logtab a {
+						font-size: 14px;
+					}
+
+					#gd_progress {
+						width: 650px;
+						white-space: nowrap;
+						overflow: hidden;
+						border: 0px solid red;
+					}
+
+					#gd_progress2 {
+						width: 610px;
+						white-space: nowrap;
+						overflow: hidden;
+						border: 0px solid red;
+					}
+
+					.filename {
+						width: 710px;
+						white-space: nowrap;
+						overflow: hidden;
+						border: 0px solid red;
+					}
+
+					.wml {
+						width: 100%;
+						height: 450px;
+						border: 0px;
+					}
+
+					.panel-body {
+						width: 770px;
+						overflow: hidden
+					}
+				</style>
+				<table width=100%>
+					<tr>
+						<td>
+							<div id="divopen">
+								<button type="button" onclick="attach_delete()">Remove</button>
+								<button type="button" onclick="attach_clear()">Clear</button>
+								<button type="button" onclick="proc_sample()">Sample MIDI</button>
+								<div id="dfile1" style="display:inline"></div>
+							</div>
+							<!--
+		<tr><td>
+			<label><input type=checkbox id="c_scansub" onclick="setstorage('c_scansub',this.checked)"> Scan all sub-folders</label>
+			<label><input type=checkbox id="c_addonly" onclick="setstorage('c_addonly',this.checked)"> Add only supported formats</label>
+		//-->
+					<tr>
+						<td>
+							<div id="downlink" style="margin-bottom:2px">Add files to the list below.</div>
+							<select id='attachment' style="width:100%;height:230px" multiple=true
+								onchange="attachment_onchange()" onclick="attachment_onchange()"
+								ondblclick="player_play()"></select>
+
+							<div id="desc"
+								style="margin-top:2px;color:green;width:700px;white-space:nowrap;overflow:hidden;border:0px solid red">
+							</div>
+							<!--<span id="spandown"></span>//-->
+					<tr>
+						<td>
+							<table align=center>
+								<td><button type=button onclick="proc_savetohistory()">Save this file list</button>
+								<td><select id='history' onchange="proc_historychange()" style="width:300px"></select>
+								<td><button type=button onclick="proc_historychange()" title="Select"><img
+											src="images/commit.png"></button>
+								<td><button type=button onclick="proc_deletehistory()" title="Delete"><img
+											src="images/close.png"></button>
+								<td><button type=button onclick="proc_clearhistory()">Clear all</button>
+							</table>
+
+							<table align=center style="white-space:nowrap">
+								<tr>
+									<td><button id="play" onclick="player_play('','',true)" class=big1>Play or
+											Pause</button> <button id="stop" onclick="player_stop()"
+											class=big1>Stop</button>
+									<td><button id="stop" onclick="player_next(true)">Prev</button> <button id="stop"
+											onclick="player_next()">Next</button>
+									<td>
+									<td><select id="loop" onchange="loop_onchange()" style="width:150px">
+											<option value=0>No Loop
+											<option value=1>Loop Current File
+											<option value=2>Loop All Files
+											<option value=3>Loop All Files (Random)
+										</select>
+									<td>
+									<td>Volume
+									<td><input id="volume" type="range" min="0" max="1" step="0.01" value="0.5"
+											onchange="volume_onchange()" style="width:140px;padding:0px;">
+									<td>
+										<div id="volume2" style="width:40px"></div>
+							</table>
+							<table align=center style="margin-bottom:3px">
+								<tr>
+									<td>Progress
+									<td><input id="progress" type="range" min="0" max="100" step="1" value=0
+											ontouchstart="this.onmousedown=null;this.onmouseup=null;this.onmousemove=null; progress_onmousedown()"
+											ontouchend="progress_onmouseup()" ontouchmove="progress_onmousemove()"
+											onmousedown="progress_onmousedown()" onmouseup="progress_onmouseup()"
+											onmousemove="progress_onmousemove()"
+											style="width:480px;margin:2px;padding:0px">
+									<td>
+										<div id="progress2"></div>
+							</table>
+
+							<center>
+								MIDI Player Type &nbsp;<select id="playertype" onchange="playertype_onchange()">
+									<option value=1>Full MIDI Player (current library)
+								</select>
+							</center>
+					<tr>
+						<td>
+							<div id="downlink2" style="margin-bottom:2px"></div>
+							<div class="panel-body" id="wml">Loading library... Please wait a moment.</div>
+
+				</table>
+
+		<tr>
+			<td>
+		<tr>
+			<td align=center>
+				<!-- Ads removed for offline mode -->
+
+	</table>
+
+	<script>
+		var ischrome = false;
+		if (navigator.userAgent.indexOf("Chrome") >= 0) ischrome = true;
+
+		function init_load() {
+			proc_displayhistory();
+			var sw = _getid('attachment').offsetWidth;
+			for (var i = 1; i <= 10; i++) {
+				var a = _getid("log" + i);
+				if (a) {
+					if (ischrome) a.setAttribute("readonly", "true");
+					a.setAttribute("spellcheck", "false");
+					a.setAttribute("wrap", "off");
+					a.style.width = sw + 'px';
+				}
+			}
+		}
+		init_load();
+	</script>
+
+	<style>
+		a.bottomlink:link {
+			text-decoration: underline;
+		}
+
+		a.bottomlink:visited {
+			text-decoration: underline;
+		}
+
+		a.bottomlink:active {
+			text-decoration: underline;
+		}
+
+		a.bottomlink:hover {
+			text-decoration: underline;
+		}
+	</style>
+
+	<table id="bottomtable" align=center>
+		<tr>
+			<td height=7>
+		<tr>
+			<td align=center><span id="bottomtitle">forced open source by plumhusky</span>
+	</table><br>
+
+	<style>
+		.hover {
+			border: 5px dashed #333;
+		}
+
+		.gd_div {
+			background-color: #FFFFE1;
+			position: absolute;
+			overflow: hidden;
+			-webkit-box-shadow: 0 0 25px #999;
+			-moz-box-shadow: 0 0 25px #999;
+			box-shadow: 0 0 25px #999;
+		}
+	</style>
+	<div id="layer_message" class="gd_div" style="z-index:10001;display:none;"></div>
+	<div id="gd_window" class="gd_div" style="z-index:10000001;display:none;"></div>
+	<div id="gd_btn_login" class="gd_div" style="z-index:10000000;display:none;">
+		<table>
+			<tr>
+				<td align=center><button onclick="gd_login_manual()" style="font-size:20px"><img src="img/product20.png"
+							align="absmiddle"> Login &
+						Authorize</button> <button onclick="gd_login_close()" style="font-size:20px">Close</button>
+			<tr>
+				<td>To use this app, Please login to the Google Drive and authorize this app or website.
+					<br>(Note: If your browser block or disable the third-party cookies, this login does not work
+					correctly.)
+		</table>
+	</div>
+	<script>
+		var CLIENT_ID = '969278067580-9od198q74kvmqhg66rm2t9bmj5kiim7f.apps.googleusercontent.com';
+		var SCOPES = [
+			'https://www.googleapis.com/auth/drive.install',
+			'https://www.googleapis.com/auth/drive.file'
+		];
+		var gd_developerKey = 'AIzaSyBxOHbrnJGfBxEuuYCv8DREfH4k1UXQrbc';
+		var gd_mimetype = "audio/midi,application/x-midi,audio/x-mid,audio/x-midi,x-music/x-midi,music/crescendo,audio/x-mod"; //application/octet-stream
+		var gd_export_extension = [];
+		var gd_state = '';
+
+		var gd_picker, gd_loaded, gd_pickerloaded, gd_lastprogress, gd_issupported, gd_isdownloading, gd_load_timer, gd_bloburl, gd_state2;
+		var gd_loginexp = 0;
+		var gd_callback;
+		var ismsie = false;
+		if (navigator.appName != "Netscape") {
+			if (navigator.userAgent.indexOf("MSIE") >= 0) ismsie = true;
+		}
+
+		function gd_btn_login2(e, callback) {
+			function go(a) {
+				if (a && a.style.display == '') {
+					var x = getScrollLeft() + ((getWindowWidth() - a.clientWidth) / 2);
+					var y = getScrollTop() + ((getWindowHeight() - a.clientHeight) / 2);
+					a.style["border"] = "1px solid #000000";
+					a.style["padding"] = "10px";
+					a.style.left = x + "px";
+					a.style.top = y + "px";
+				}
+			}
+			go(_getid("gd_btn_login"));
+			go(_getid("gd_window"));
+			setTimeout(function () {
+				go(_getid("gd_btn_login"));
+				go(_getid("gd_window"));
+				if (callback) callback();
+			}, 10);
+		}
+		function gd_btn_login(isshow) {
+			var a = _getid("gd_btn_login");
+			if (isshow) {
+				a.style.display = '';
+				gd_btn_login2();
+			} else {
+				a.style.display = 'none';
+			}
+		}
+		function gd_login_close() {
+			gd_btn_login(false);
+			gd_state = '';
+		}
+		function gd_login_manual() {
+			var p = { 'client_id': CLIENT_ID, 'scope': SCOPES.join(' '), 'immediate': false };
+			if (gd_userId) { p['login_hint'] = gd_userId; p['authuser'] = -1; }
+			gapi.auth.authorize(p, function (authResult) {
+				if (authResult && !authResult.error) {
+					gd_loginexp = (new Date()).getTime() + parseInt(authResult.expires_in * 0.7 * 1000);
+					gd_btn_login(false); gd_info();
+					show_message("Login ok!!");
+					if (gd_callback) gd_callback(true);
+					else gd_open_state(true);
+				} else {
+					gd_btn_login(true);
+					show_message("Login failed!!");
+				}
+			});
+		}
+		function gd_login(callback, react) {
+			if (gd_loginexp == 0 || gd_loginexp < (new Date()).getTime()) {
+			} else {
+				callback(true);
+				return;
+			}
+			var p = { 'client_id': CLIENT_ID, 'scope': SCOPES.join(' '), 'immediate': true };
+			if (gd_userId) { p['login_hint'] = gd_userId; p['authuser'] = -1; }
+			gapi.auth.authorize(p, function (authResult) {
+				if (authResult && !authResult.error) {
+					gd_loginexp = (new Date()).getTime() + parseInt(authResult.expires_in * 0.7 * 1000);
+					gd_btn_login(false); gd_info();
+					callback(true);
+				} else {
+					show_message("Login failed!!");
+					gd_btn_login(true);
+					callback(false);
+					if (react) gd_callback = callback;
+					else gd_callback = null;
+				}
+			});
+		}
+		function gd_checklogin(callback) {
+			gd_login(function (result) {
+				if (result) callback();
+			}, true);
+		}
+
+		function gd_loadpicker() {
+			gapi.load('picker', {
+				'callback': function () {
+					gd_pickerloaded = true;
+				}
+			});
+		}
+		function gd_createpicker() {
+			var access_token = gapi.auth.getToken().access_token;
+			if (!access_token) {
+				alert('Error!! No access token.');
+				return;
+			}
+			if (!gd_picker) {
+				var view2 = new google.picker.DocsView(google.picker.ViewId.DOCS);
+				if (gd_mimetype) view2.setMimeTypes(gd_mimetype);
+				view2.setMode(google.picker.DocsViewMode.LIST);
+
+				var view4 = new google.picker.DocsView();
+				view4.setIncludeFolders(true);
+				//view4.setSelectFolderEnabled(true);
+				view4.setParent("root");
+				//view4.setMimeTypes(gd_mimetype);
+				view4.setMode(google.picker.DocsViewMode.LIST);
+				var view5 = new google.picker.View(google.picker.ViewId.RECENTLY_PICKED);
+
+				gd_picker = new google.picker.PickerBuilder()
+					//.enableFeature(google.picker.Feature.NAV_HIDDEN)
+					.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+					.setLocale("en")
+					.setAppId(CLIENT_ID.split("-")[0]) //scope
+					.setTitle('')
+					.setOAuthToken(access_token)
+					.addView(view2)
+					.addView(view4)
+					.addView(view5)
+					.addView(new google.picker.DocsUploadView())
+					.setDeveloperKey(gd_developerKey)
+					.setCallback(gd_pickercallback)
+					.build();
+			}
+			gd_picker.setVisible(true);
+		}
+		function gd_pickercallback(data) {
+			if (data.action == google.picker.Action.PICKED) {
+				if (data.docs && data.docs.length > 0) {
+					gd_loadfiles(data.docs);
+				}
+			}
+		}
+		function gd_count() {
+			var a = _getid('spancount');
+			if (a && gd_files) a.innerHTML = "(" + gd_files.length + " Added)";
+		}
+
+		var gd_files = [];
+		var gd_files_count = 0;
+		function gd_addfiles(files) {
+			var c_addonly = true;
+			var d, s;
+			var a = _getid("attachment");
+			for (var i = 0; i <= files.length - 1; i++) {
+				d = files[i];
+				if (!d.resp || !d.resp.title || d.resp.mimeType == 'application/vnd.google-apps.folder') continue;
+				var c = document.createElement("option");
+				gd_files_count++;
+				d.idx = gd_files_count;
+				c.value = d.idx;
+				s = '';
+				if (d.resp.exportLinks && !getSupported(d.resp)) {
+					s = '[Not Supported] ';
+					if (c_addonly) continue;
+				}
+				if (c_addonly && !d.resp.exportLinks && !getSupported2(d.resp)) {
+					_getid("wml").innerHTML = '<div class="filename"><font class=error>Error. This file format does not support. ' + henc(d.resp.title) + '</font></div>';
+					continue;
+				}
+				if (d.parent) s += d.parent + '/';
+				s = s + d.resp.title + ' (' + getsize(d.resp.fileSize) + ')';
+				if (d.f) s += ' (Local File)';
+				c.appendChild(document.createTextNode(s));
+				a.appendChild(c);
+				gd_files.push(files[i]);
+			}
+			_getid("downlink").innerHTML = "Add files to the list below.";
+			gd_count();
+		}
+		function gd_loadfiles(docs) {
+			if (gadb) { alert('Please disable the adblock for free use.'); return; } if (gd_isdownloading) {
+				alert("It's working... Please try again later.");
+				return;
+			}
+
+			function end() {
+				gd_isdownloading = false;
+				clearTimeout(messagetimer);
+				hide_message();
+				var a = _getid("downlink");
+				if (a.innerHTML && a.innerHTML.indexOf("adownlink") < 0) {
+					_getid("downlink").innerHTML = "Add files to the list below.";
+				}
+			}
+			var canceled = false;
+			_getid("downlink").innerHTML = "<table><tr><td><img src='images/wait.gif' align='absmiddle'><td><a href='#' id='gd_cancel'>Cancel</a><td><div id='gd_progress'>Getting file information...</div></table>";
+			_getid('gd_cancel').onclick = function () {
+				canceled = true;
+				return false;
+			}
+			gd_isdownloading = true;
+			if (!docs) {
+				end(); return;
+			}
+
+			var files = [];
+			for (var i = 0; i <= docs.length - 1; i++) {
+				if (!docs[i].id) continue;
+				var d = {};
+				d.id = docs[i].id;
+				d.name = docs[i].name;
+				d.done = false;
+				files.push(d);
+			}
+
+			function complete() {
+				gd_addfiles(files);
+			}
+
+			var joblist = [];
+			var jobtimer;
+			function getentryidx() {
+				for (var i = 0; i <= files.length - 1; i++) {
+					if (!files[i].done) {
+						files[i].done = true;
+						return i;
+					}
+				}
+				return null;
+			}
+			function checkjoblist() {
+				if (joblist.length == 0) return;
+				for (var i = 0; i <= joblist.length - 1; i++) {
+					if (!joblist[i].complete) return;
+				}
+				clearInterval(jobtimer);
+				end();
+				complete();
+			}
+
+			var c_scansub = false;
+			function get(jobidx) {
+				function _call() {
+					var a = joblist[jobidx];
+					a.func(jobidx)
+				}
+				var idx = getentryidx();
+				if (idx == null || canceled) {
+					joblist[jobidx].complete = true;
+					return;
+				}
+				if (files[idx].resp) {
+					_call();
+					return;
+				}
+
+				function _progress(s) {
+					var a = _getid("gd_progress");
+					if (a) a.innerHTML = '(' + (idx + 1) + '/' + files.length + ') ' + henc(s);
+				}
+				var folderlist;
+				function getfolder(folderidx) {
+					if (folderidx > folderlist.length - 1 || canceled) {
+						_call();
+						return;
+					}
+					_progress('Getting files in the folder... ' + folderlist[folderidx].name);
+					retrieveAllFiles("'" + folderlist[folderidx].id + "' in parents and trashed=false", function (results) {
+						var parent = folderlist[folderidx].parent || '';
+						if (parent) parent += 'index.html';
+						parent += folderlist[folderidx].name || '';
+
+						for (var i = 0; i <= results.length - 1; i++) {
+							var d = {};
+							d.id = results[i].id;
+							d.name = results[i].title;
+							d.resp = results[i];
+							d.parent = parent;
+							d.done = true;
+							files.push(d);
+							if (c_scansub && d.resp.mimeType == 'application/vnd.google-apps.folder') {
+								folderlist.push(d);
+							}
+						}
+						folderidx++;
+						getfolder(folderidx);
+					});
+				}
+
+				var fileId = files[idx].id;
+				_progress('Getting file info...');
+
+				var request = gapi.client.drive.files.get({
+					'fileId': fileId, 'fields': 'id,title,fileSize,alternateLink,webContentLink,parents/id,mimeType,exportLinks,downloadUrl'
+				});
+				request.execute(function (resp) {
+					if (resp.error) {
+						var s = 'Error. ';
+						if (files[idx].name) s += files[idx].name + '  ';
+						if (resp.error.message) s += resp.error.message + ' ';
+						if (resp.error.code == 401) s += 'Login or Authorize Error.';
+						//_log("log4",s,"error");
+						_getid('downlink2').innerHTML = '&nbsp;<font class="error">' + henc(s) + '</font>';
+					}
+					files[idx].resp = resp;
+					if (!files[idx].name) files[idx].name = resp.title;
+
+					/*if(files[idx].resp.mimeType=='application/vnd.google-apps.folder'){
+						folderlist=[];
+						folderlist.push(files[idx]);
+						getfolder(0);
+					}else{*/
+					_call();
+					//}
+				});
+			}
+
+			if (files.length == 0) {
+				end(); return;
+			}
+			gapi.client.load('drive', 'v2', function () {
+				jobtimer = setInterval(checkjoblist, 200);
+				for (var i = 0; i < 2; i++) {
+					var a = {};
+					a.func = get;
+					a.complete = false;
+					joblist.push(a);
+					a.func(i);
+				}
+			});
+		}
+
+		function retrieveAllFiles(query, callback) {
+			var fields = 'items(id,title,fileSize,alternateLink,webContentLink,parents/id,mimeType,exportLinks,downloadUrl),nextPageToken';
+			var retrievePageOfFiles = function (request, result) {
+				request.execute(function (resp) {
+					result = result.concat(resp.items);
+					var nextPageToken = resp.nextPageToken;
+					if (nextPageToken) {
+						request = gapi.client.drive.files.list({
+							'q': query, 'pageToken': nextPageToken, 'fields': fields
+						});
+						retrievePageOfFiles(request, result);
+					} else {
+						callback(result);
+					}
+				});
+			}
+			var initialRequest = gapi.client.drive.files.list({
+				'q': query, 'fields': fields
+			});
+			retrievePageOfFiles(initialRequest, []);
+		}
+
+		var g_supportimgs = ',mid,midi,kar,hmi,hmp,mus,xmi,mod,xm,s3m,it,vgm,vgz,nsf,mmp,mmpz,mscz,mscx,abc,xml,musicxml,mxl,';//mld
+		var g_adlibfiles = ',a2m,adl,agd,amd,bam,bmf,cff,cmf,d00,dfm,dmo,dro,dtm,got,ha2,hsc,hsp,hsq,imf,ims,jbm,ksm,laa,lds,m,mad,mdi,mkj,msc,mtk,rad,raw,rix,rol,sa2,sat,sci,sdb,sng,sop,sqx,xad,xms,xsm,' + 'as3m,cmf2,dro2,mkf,pis,sng2,sng3,u6m,wlf,xad2,xad3,xad4,xad5,'; //mid,mus,s3m,vgm,sci(?)
+
+		function getSupported2(d, istype) {
+			var arr = d.title.split('.');
+			if (arr.length > 1) {
+				var ext = arr[arr.length - 1].toLowerCase();
+				if (istype) {
+					if (',mod,xm,s3m,it,'.indexOf(',' + ext + ',') >= 0) return 'mod';
+					else if (',vgm,vgz,'.indexOf(',' + ext + ',') >= 0) return 'vgm';
+					else if (',nsf,'.indexOf(',' + ext + ',') >= 0) return 'nsf';
+					else if (',mmp,mmpz,'.indexOf(',' + ext + ',') >= 0) return 'mmp';
+					else if (',mscz,mscx,'.indexOf(',' + ext + ',') >= 0) return 'mscz';
+					else if (',abc,'.indexOf(',' + ext + ',') >= 0) return 'abc';
+					else if (',xml,musicxml,mxl,'.indexOf(',' + ext + ',') >= 0) return 'mxml';
+					else if (g_adlibfiles.indexOf(',' + ext + ',') >= 0) return 'adlib';
+				} else if (g_supportimgs.indexOf(',' + ext + ',') >= 0 || g_adlibfiles.indexOf(',' + ext + ',') >= 0) {
+					return true;
+				}
+			}
+			if (d.mimeType) {
+				var arr = g_supportimgs.split(',');
+				var s1 = d.mimeType.toLowerCase();
+				var ext;
+				for (var i = 0; i <= arr.length - 1; i++) {
+					ext = trim(arr[i]);
+					if (ext && s1.indexOf(ext) >= 0) {
+						if (istype) {
+							if (',mod,xm,s3m,it,'.indexOf(',' + ext + ',') >= 0) return 'mod';
+							else if (',vgm,vgz,'.indexOf(',' + ext + ',') >= 0) return 'vgm';
+							else if (',nsf,'.indexOf(',' + ext + ',') >= 0) return 'nsf';
+							else if (',mmp,mmpz,'.indexOf(',' + ext + ',') >= 0) return 'mmp';
+							else if (',mscz,mscx,'.indexOf(',' + ext + ',') >= 0) return 'mscz';
+							else if (',abc,'.indexOf(',' + ext + ',') >= 0) return 'abc';
+							else if (',xml,musicxml,mxl,'.indexOf(',' + ext + ',') >= 0) return 'mxml';
+						} else {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		function getSupported(d) {
+			/*var m=d.mimeType || '';
+			if(m.indexOf('vnd.google-apps.document')>=0 || m.indexOf('vnd.google-apps.presentation')>=0 || m.indexOf('vnd.google-apps.drawing')>=0){ 
+				return true;
+			}*/
+		}
+
+		function proc_logincheck() {
+			_getid("log4").innerHTML = '';
+			_getid("log5").innerHTML = '';
+			var b = _getid("gd_progress2");
+			if (b) b.innerHTML = '';
+			_log("log4", 'Login checking...', 'welcome');
+		}
+
+		function attach_move(direct) {
+			var a = gd_files;
+			var c = _getid("attachment");
+			if (c.options.length == 0) return;
+
+			var k = 0;
+			for (var i = 0; i < c.options.length; i++) {
+				if (c.options[i].selected) k++;
+			}
+			if (k != 1) {
+				alert("Please select one.");
+				return;
+			}
+			if (direct == 1) { //down
+				for (var i = c.options.length - 2; i >= 0; i--) {
+					var b = c.options[i];
+					if (b.selected) {
+						var nextOpt = c.options[i + 1];
+						b = c.removeChild(b);
+						nextOpt = c.replaceChild(b, nextOpt);
+						c.insertBefore(nextOpt, b);
+						c.selectedIndex = i + 1;
+
+						var c = a[i];
+						var d = a[i + 1];
+						a[i + 1] = c;
+						a[i] = d;
+						break;
+					}
+				}
+			} else { //up
+				for (var i = 0; i < c.options.length; i++) {
+					var b = c.options[i];
+					if (b.selected) {
+						if (i == 0) break;
+						c.removeChild(b);
+						c.insertBefore(b, c[i - 1]);
+						c.selectedIndex = i - 1;
+
+						var c = a[i];
+						var d = a[i - 1];
+						a[i - 1] = c;
+						a[i] = d;
+						break;
+					}
+				}
+			}
+		}
+		function attach_delete() {
+			function remove(idx) {
+				for (var i = 0; i <= gd_files.length - 1; i++) {
+					if (gd_files[i].idx == idx) {
+						if (!gdata || gdata.idx != gd_files[i].idx) {
+							if (gd_files[i].buffer) delete gd_files[i].buffer;
+						}
+						gd_files.splice(i, 1);
+						return;
+					}
+				}
+			}
+			var a = _getid("attachment");
+			var k = -1;
+			for (var i = a.options.length - 1; i >= 0; i--) {
+				if (a.options[i].selected) {
+					remove(a.options[i].value);
+					a.remove(i);
+					k = i;
+				}
+			}
+			if (k > a.options.length - 1) k = a.options.length - 1;
+			if (k >= 0) {
+				a.selectedIndex = k;
+			}
+			gd_count();
+		}
+		function attach_clear() {
+			var a = _getid("attachment");
+			for (var i = a.options.length - 1; i >= 0; i--) a.remove(i);
+			for (var i = 0; i <= gd_files.length - 1; i++) {
+				if (!gdata || gdata.idx != gd_files[i].idx) {
+					if (gd_files[i].buffer) delete gd_files[i].buffer;
+				}
+			}
+			gd_files = [];
+			gd_count();
+		}
+		function attachment_onchange() {
+			//_getid("spandown").innerHTML='';
+			function _down(data) {
+				var resp = data.resp;
+				var obj = _getid("spandown");
+				if (!obj) return;
+				if (gd_files[i].f) {
+					obj.innerHTML = '(Local File)';
+					return;
+				}
+				if (resp.downloadUrl) {
+					obj.innerHTML = '&nbsp;<a id="adownlink" target="_blank">Download this file</a>'; //&nbsp; ('+getsize(resp.fileSize)+')';
+					var a = _getid("adownlink");
+					if (a) {
+						var s1 = resp.downloadUrl;
+						if (!resp.issample) {
+							var accessToken = gapi.auth.getToken().access_token;
+							s1 += '&access_token=' + encodeURIComponent(accessToken);
+						}
+						a.href = resp.webContentLink || s1;
+						a.download = resp.title;
+						a.title = resp.title;
+					}
+				}
+			}
+			function find(idx) {
+				var resp;
+				for (var i = 0; i <= gd_files.length - 1; i++) {
+					if (gd_files[i].idx == idx) {
+						resp = gd_files[i].resp;
+						var s = '<font color=black>' + (i + 1) + ')</font> ';
+						var link = resp.alternateLink || resp.webContentLink;
+						if (link) s += '<a href="' + link + '" target="_blank" title="View this file">' + henc(resp.title) + '</a>';
+						else s += henc(resp.title);
+						s += ' (' + getsize(resp.fileSize) + ')';
+						if (resp.parents && resp.parents[0] && resp.parents[0].id) {
+							s += ' &nbsp;<a href="' + gd_weburl() + '#folders/' + resp.parents[0].id + '" target="_blank" onclick="gd_clickweburl(this)" title="Show Folder, Folder ID: ' + resp.parents[0].id + '">Folder</a>';
+						}
+						_getid("desc").innerHTML = s + ' <span id="spandown" style="color:black"></span>';
+						_down(gd_files[i]);
+						return;
+					}
+				}
+			}
+			var a = _getid("attachment");
+			for (var i = a.options.length - 1; i >= 0; i--) {
+				if (a.options[i].selected) {
+					find(a.options[i].value);
+					break;
+				}
+			}
+		}
+
+		function gd_open_picker() {
+			if (!gd_issupported) {
+				alert("This browser does not support.");
+				return;
+			}
+			if (!gd_loaded || !gd_pickerloaded) {
+				if (!gd_load_timer) gd_loadscript(gd_open_picker);
+				else alert('Not loaded library. Please try again later.');
+				return;
+			}
+			gd_checklogin(function () {
+				gd_createpicker();
+			});
+		}
+		function gd_getparam(s, name) {
+			name = name + "=";
+			name = name.toLowerCase();
+			var p1 = s.toLowerCase().indexOf(name);
+			if (p1 < 0) return "";
+			s = s.substr(p1 + name.length);
+			var p2 = s.toLowerCase().indexOf("&");
+			if (p2 >= 0) {
+				return s.substr(0, p2);
+			} else {
+				return s;
+			}
+		}
+		function gd_open_state(force) {
+			var s = gd_state;
+			if (s) {
+				if (!gd_issupported) {
+					gd_state = '';
+					alert("This browser does not support.");
+					return;
+				}
+				s = decodeURIComponent(s);
+				try {
+					var a = JSON.parse(s);
+					var ids = [];
+					function find(b) {
+						if (!b) return;
+						for (var i = 0; i <= b.length - 1; i++) {
+							if (b[i]) {
+								var cc = {};
+								cc.id = b[i];
+								ids.push(cc);
+							}
+						}
+					}
+					find(a.ids);
+					find(a.exportIds);
+					if (ids.length > 0) {
+						gd_login(function (result) {
+							if (gd_open2 && !force) return;
+							gd_open2 = true;
+							if (!result) return;
+							//_getid('gd_btn_reopen').style.display='';
+							gd_state = '';
+							gd_loadfiles(ids);
+						});
+					}
+				} catch (err) {
+				}
+			}
+		}
+		function gd_clientload() {
+			gd_loaded = true;
+			if (window.addEventListener) {
+				window.addEventListener("resize", gd_btn_login2, false);
+			} else if (window.attachEvent) {
+				window.attachEvent("onresize", gd_btn_login2);
+			}
+			gd_open_state();
+		}
+		var gd_open2;
+		function gd_open_state2() {
+			setTimeout(function () {
+				if (!gd_open2) gd_open_state();
+			}, 1000);
+		}
+
+		function gd_loadscript(callback) {
+			function inject(s) {
+				var o = document.createElement('scri' + 'pt');
+				o.setAttribute('src', s);
+				o.setAttribute('type', 'text/javascript');
+				document.body.appendChild(o);
+			}
+			if (gd_load_timer) return;
+			if (gd_loaded && gd_pickerloaded) return;
+			gd_load_timer = setInterval(function () {
+				if (gd_loaded && gd_pickerloaded) {
+					clearInterval(gd_load_timer);
+					if (callback) callback();
+				}
+			}, 100);
+			//inject('https://apis.google.com/js/client.js?onload=gd_clientload');
+			//inject('https://apis.google.com/js/api.js?onload=gd_loadpicker');
+		}
+		function gd_dblclick() {
+			function dblclick() {
+				try {
+					if (gd_picker) gd_picker.setVisible(false);
+				} catch (err) { }
+			}
+			function keydown(e) {
+				if (!e) e = window.event;
+				if (e && e.keyCode == 27) dblclick();
+			}
+			if (window.addEventListener) {
+				document.addEventListener("dblclick", dblclick, false);
+				document.addEventListener("keydown", keydown, false);
+			} else if (window.attachEvent) {
+				document.attachEvent("ondblclick", dblclick);
+				document.attachEvent("onkeydown", keydown);
+			}
+		}
+		var gd_userId, gd_email;
+		function gd_weburl() {
+			var s;
+			if (gd_email) s = 'https://drive.google.com/?authuser=' + encodeURIComponent(gd_email);
+			else s = 'https://drive.google.com/';
+			return s;
+		}
+		function gd_clickweburl(f) {
+			var s = f.href || '';
+			var p1 = s.indexOf('#');
+			if (p1 < 0) s = '';
+			else s = s.substr(p1, s.length);
+			f.href = gd_weburl() + s;
+		}
+		function gd_info() {
+			if (gd_email) return;
+			gapi.client.load('drive', 'v2', function () {
+				var request = gapi.client.drive.about.get();
+				request.execute(function (resp) {
+					if (resp && resp.user) {
+						if (gd_email) return;
+						gd_email = resp.user.emailAddress;
+						if (gd_email) {
+							var a = _getid('btn_open');
+							var b = _getid('gd_btn_reopen');
+							if (a) a.title = a.title + ' (' + gd_email + ')';
+							if (b) b.title = b.title + ' (' + gd_email + ')';
+						}
+					}
+				});
+			});
+		}
+		function gd_init() {
+			//if(getstorage('c_scansub')=='true')_getid('c_scansub').checked=true;
+			//if(getstorage('c_addonly')=='true')_getid('c_addonly').checked=true;	
+			gd_dblclick();
+			gd_state2 = gd_state;
+			if (!window.XMLHttpRequest || !window.FileReader) {
+			} else {
+				gd_issupported = true;
+				if (gd_state) {
+					try {
+						var a = JSON.parse(gd_state);
+						gd_userId = a.userId;
+						if (a.ids || a.exportIds) {
+							_getid("downlink").innerHTML = "<table><tr><td><div id='gd_progress'>Ready...</div></table>";
+						}
+					} catch (err) { }
+					if (window.addEventListener) window.addEventListener("load", gd_open_state2, false);
+					else if (window.attachEvent) window.attachEvent("onload", gd_open_state2);
+				}
+				gd_loadscript();
+			}
+		}
+		gd_init();
+
+		var isReady1;
+		function _isReady() {
+			if (isReady1) return true;
+			else return false;
+		}
+		var gdata;
+		var g_maxdown = 10;
+
+		var ULONG_MAX = 4294967295;
+		var currentSamples = 0, totalSamples = 0, seekSamples = ULONG_MAX, pauseAudioAfterDrainingBuffer = false, signalStop = 0, callbackOnStop = null;
+		function samplesToTime(at) {
+			if (!at) at = 0;
+			var in_s = Math.ceil(at / SAMPLE_RATE);
+			var s = in_s % 60;
+			var min = in_s / 60 | 0;
+			return min + ':' + (s === 0 ? '00' : s < 10 ? '0' + s : s);
+		}
+		function updateProgress(current, total) {
+			currentSamples = current;
+			totalSamples = total;
+			if (current == total) {
+				var v = _getid('loop').value;
+				if (v == 2 || v == 3) {
+					player_next(false, true);
+				} else if (v == 1) {
+					//console.log('end');
+					clearTimeout(playtimer);
+					playtimer = setTimeout(function () {
+						mplay.stop();
+						callbackOnStop = mplay.play();
+					}, 500);
+				}
+			}
+		}
+		function processAudio(buffer_loc, size) {
+			buffer = circularBuffer.prepare();
+			var left_buffer_f32 = buffer.getChannelData(0);
+			var right_buffer_f32 = buffer.getChannelData(1);
+			for (var i = 0; i < size; i++) {
+				left_buffer_f32[i] = Module.HEAP16[(buffer_loc >> 1) + 2 * i + 0] / 32768;
+				right_buffer_f32[i] = Module.HEAP16[(buffer_loc >> 1) + 2 * i + 1] / 32768;
+			}
+		}
+		function completeConversion(status) {
+			pauseAudioAfterDrainingBuffer = true;
+			//console.log('complete conversion', status);
+			convertionJob = null;
+		}
+		var midiName;
+		var convertionJob = null;
+		var audioctx = window.AudioContext || window.webkitAudioContext;
+		var gdowntime = (new Date()).getTime();
+		var Module = {
+			setStatus: function (text) {
+				if (!audioctx) return;
+				if (!isReady1) {
+					if (text && text.indexOf("Downloading data") == 0) {
+						if (gdowntime) {
+							var elaspetime = new Date();
+							var dt = (elaspetime.getTime() - gdowntime);
+							if (dt < 200) return;
+							gdowntime = elaspetime.getTime();
+						}
+					}
+					_getid('wml').innerHTML = henc(text);
+				}
+				if (text == 'Running...') {
+					isReady1 = true;
+					_getid('wml').innerHTML = '';
+				}
+			},
+			monitorRunDependencies: function (left) {
+			}
+		}
+	</script>
+
+	<script src="js/web-audio-api-shim-light.js"></script>
+	<script src="js/1/web_audio_player.js"></script>
+	<script src="midi/wildwebmidi2.js"></script>
+
+	<script>
+		function playertype_onchange() {
+			setCookie("playertype2", _getid('playertype').value);
+			player_stop();
+			setTimeout(function () {
+				var answer = confirm("Need to refresh the webpage to apply this setting.\n\nDo you want to refresh this webpage now?");
+				if (answer) {
+					location.reload();
+					//location.href=location.href;		
+				}
+			}, 500);
+		}
+		var modplay, modTimer, modTimer2;
+		function get_modplay() {
+			if (modplay) return;
+			var a = _getid('framemodplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading MOD library... Please wait a moment.';
+			a.src = 'mod.html';
+			clearInterval(modTimer);
+			modTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading MOD library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.player) {
+					clearInterval(modTimer);
+					_getid("wml").innerHTML = '';
+					modplay = b;
+				}
+			}, 1000);
+		}
+		var vgmplay, vgmTimer, vgmTimer2;
+		function get_vgmplay() {
+			if (vgmplay) return;
+			var a = _getid('framevgmplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading VGM library... Please wait a moment.';
+			a.src = 'vgm.html';
+			clearInterval(vgmTimer);
+			vgmTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading VGM library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load) {
+					clearInterval(vgmTimer);
+					_getid("wml").innerHTML = '';
+					vgmplay = b;
+				}
+			}, 1000);
+		}
+		var nsfplay, nsfTimer, nsfTimer2;
+		function get_nsfplay() {
+			if (nsfplay) return;
+			var a = _getid('framensfplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading NSF library... Please wait a moment.';
+			a.src = 'nsf.html';
+			clearInterval(nsfTimer);
+			nsfTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading NSF library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load) {
+					clearInterval(nsfTimer);
+					_getid("wml").innerHTML = '';
+					nsfplay = b;
+				}
+			}, 1000);
+		}
+		var mmpplay, mmpTimer, mmpTimer2;
+		function get_mmpplay() {
+			if (mmpplay) return;
+			var a = _getid('framemmpplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading MMP library... Please wait a moment.';
+			a.src = 'mmp.html';
+			clearInterval(mmpTimer);
+			mmpTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading MMP library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load) {
+					clearInterval(mmpTimer);
+					_getid("wml").innerHTML = '';
+					mmpplay = b;
+				}
+			}, 1000);
+		}
+		var asyncsupported = false;
+		var msczplay, msczTimer, msczTimer2, gworking;
+		function get_msczplay() {
+			if (msczplay) return;
+			var a = _getid('framemsczplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading MSCZ library... Please wait a moment.';
+			var b = _getfrmdoc(a);
+			if (b) b.location.replace('mscza18a.html?t=' + (new Date()).getTime());
+			else a.src = 'mscza18a.html?t=' + (new Date()).getTime();
+			clearInterval(msczTimer);
+			msczTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading MSCZ library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load && b.loaded) {
+					clearInterval(msczTimer);
+					//_getid("wml").innerHTML='';
+					msczplay = b;
+				}
+			}, 1000);
+		}
+		function clean_msczplay() {
+			if (msczplay) {
+				msczplay = '';
+				try {
+					var a = _getid('framemsczplay');
+					if (a) {
+						var b = _getfrmdoc(a);
+						if (b) b.location.replace('about:blank');
+					}
+				} catch (err) { }
+			}
+		}
+		var abcplay, abcTimer, abcTimer2;
+		function get_abcplay() {
+			if (abcplay) return;
+			var a = _getid('frameabcplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading ABC library... Please wait a moment.';
+			a.src = 'abc.html';
+			clearInterval(abcTimer);
+			abcTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading ABC library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load) {
+					clearInterval(abcTimer);
+					_getid("wml").innerHTML = '';
+					abcplay = b;
+				}
+			}, 1000);
+		}
+		var mxmlplay, mxmlTimer, mxmlTimer2;
+		function get_mxmlplay() {
+			if (mxmlplay) return;
+			var a = _getid('framemxmlplay');
+			if (!a) return;
+			_getid("wml").innerHTML = 'Loading MusicXML library... Please wait a moment.';
+			a.src = 'musicxml.html';
+			clearInterval(mxmlTimer);
+			mxmlTimer = setInterval(function () {
+				_getid("wml").innerHTML = 'Loading MusicXML library... Please wait a moment.';
+				var b = _getfrmdoc(a);
+				if (b && b.mod_load) {
+					clearInterval(mxmlTimer);
+					_getid("wml").innerHTML = '';
+					mxmlplay = b;
+				}
+			}, 1000);
+		}
+		function get_instance() {
+			if (gdata.type == 'mod') return modplay;
+			else if (gdata.type == 'vgm') return vgmplay;
+			else if (gdata.type == 'nsf') return nsfplay;
+			else if (gdata.type == 'mmp') return mmpplay;
+			else if (gdata.type == 'mscz') return msczplay;
+			else if (gdata.type == 'abc') return abcplay;
+			else if (gdata.type == 'mxml') return mxmlplay;
+		}
+
+		var mplay = {
+			play: function (ispause) {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					_getid("wml").innerHTML = '';
+					var instance = get_instance();
+					if (instance) {
+						if (ispause && instance.mod_paused()) {
+							instance.mod_togglePause();
+						} else {
+							instance.mod_play();
+							mplay.setMasterVolume(_getid('volume').value * 16383);
+						}
+					}
+				} else {
+					if (convertionJob) {
+						mplay.stop();
+						convertionJob = null;
+						callbackOnStop = mplay.play();
+						return;
+					}
+					if (!midiName) return;
+					_getid("wml").innerHTML = '';
+					convertionJob = {
+						sourceMidi: 'freepats/' + midiName,
+						targetWav: midiName.replace(/\.midi?$/i, '.wav'),
+						targetPath: ''
+					};
+					var sleep = 10;
+					circularBuffer.reset();
+					setTimeout(startAudio, 100);
+					try {
+						Module.print = function (s) { };
+						Module.printErr = function (s) {
+							if (/^(Error \(WildMidi)/i.test(s)) {
+								_getid("wml").innerHTML = '<font class=error>Error. This file format does not support. or There is a fatal error.</font>';
+							}
+						};
+						Module.ccall('wildwebmidi',
+							null,
+							['string', 'string', 'number'],
+							[convertionJob.sourceMidi, convertionJob.targetPath, sleep],
+							{ async: true }
+						);
+					} catch (err) {
+						_getid("wml").innerHTML = '<font class=error>Error. This file format does not support. or There is a fatal error.<br>You might need to reload the current web page.</font>';
+					}
+				}
+			},
+			stop: function (ispause) {
+				if (convertionJob) {
+					if (currentSamples >= 0) seekSamples = currentSamples;
+					circularBuffer.reset();
+					signalStop = 1;
+				}
+				if (modplay) {
+					if (ispause) modplay.mod_togglePause();
+					else modplay.mod_stop();
+				}
+				if (vgmplay) {
+					if (ispause) vgmplay.mod_togglePause();
+					else vgmplay.mod_stop();
+				}
+				if (nsfplay) {
+					if (ispause) nsfplay.mod_togglePause();
+					else nsfplay.mod_stop();
+				}
+			},
+			setMasterVolume: function (value) {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					var instance = get_instance();
+					if (instance) instance.mod_set_volume((value / 16383) * 1.2);
+				}
+				if (gainNode) gainNode.gain.value = (value / 16383) * 2.2;
+			},
+			loadMidiFile: function (value) {
+				midiName = 'temp.html'; //Math.floor((Math.random() * 1000000) + 1)
+				try {
+					FS.writeFile('/freepats/' + midiName, value, { encoding: 'binary' });
+				} catch (err) {
+					_getid("wml").innerHTML = '<font class=error>Error. This file format does not support. or There is a fatal error.<br>You might need to reload the current web page.</font>';
+				}
+			},
+			loadModFile: function (value) {
+				modplay.mod_load(value, function (iserror) {
+					//console.log(iserror);
+					if (iserror) {
+						_getid("wml").innerHTML = '<font class=error>Error. This file format does not support. or There is a fatal error.</font>';
+						return;
+					}
+					setTimeout(function () {
+						var v = _getid('loop').value;
+						if (v == 2 || v == 3) {
+							player_next(false, true);
+						} else if (v == 1) {
+							mplay.stop();
+							mplay.play();
+						}
+					}, 1000);
+				});
+			},
+			loadVGMFile: function (value) {
+				vgmplay.mod_load(value, function (iserror) {
+					setTimeout(function () {
+						var v = _getid('loop').value;
+						if (v == 2 || v == 3) {
+							player_next(false, true);
+						} else if (v == 1) {
+							mplay.stop();
+							mplay.play();
+							//mplay.position=0;
+							//vgmplay.mod_togglePause();
+						}
+					}, 1000);
+				});
+			},
+			loadNSFFile: function (value) {
+				nsfplay.mod_load(value, function (iserror) {
+					if (iserror) {
+						_getid("wml").innerHTML = '<font class=error>Error. This file format does not support. or There is a fatal error. ' + henc(iserror) + '</font>';
+						return;
+					}
+					setTimeout(function () {
+						var v = _getid('loop').value;
+						if (v == 2 || v == 3) {
+							player_next(false, true);
+						} else if (v == 1) {
+							mplay.stop();
+							mplay.play();
+							//mplay.position=0;
+							//vgmplay.mod_togglePause();
+						}
+					}, 1000);
+				});
+			},
+			setTempoRate: function (value) {
+				//
+			},
+			setLoop: function (value) {
+				//
+			},
+			setCC111Loop: function (value) {
+				//
+			},
+			setFalcomLoop: function (value) {
+				//
+			},
+			setMFiLoop: function (value) {
+				//
+			},
+			setWebMidiLink: function (value1, value2) {
+				//
+			},
+		};
+		Object.defineProperty(mplay, 'pause', {
+			get: function () {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					var instance = get_instance();
+					if (instance) return instance.mod_paused();
+				} else {
+					if (convertionJob) return false;
+					else return true;
+				}
+			}
+		});
+		Object.defineProperty(mplay, 'position', {
+			get: function () {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					var instance = get_instance();
+					if (instance) return instance.mod_get_position();
+				} else {
+					return currentSamples;
+				}
+			},
+			set: function (value) {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					var instance = get_instance();
+					if (instance) instance.mod_set_position(value);
+				} else {
+					if (value > totalSamples - 10000) value = totalSamples - 10000;
+					if (value < 0) value = 0;
+					seekSamples = value;
+				}
+			}
+		});
+		Object.defineProperty(mplay, 'length', {
+			get: function () {
+				if (gdata && (gdata.type == 'mod' || gdata.type == 'vgm' || gdata.type == 'nsf')) {
+					var instance = get_instance();
+					if (instance) return instance.mod_length();
+				} else {
+					return totalSamples;
+				}
+			}
+		});
+
+		function player_play(idx, idx2, control) {
+			if (gadb) { alert('Please disable the adblock for free use.'); return; } clearTimeout(looptimer);
+			function f_download(callback, fdata) {
+				var resp = fdata.resp;
+				if (gd_isdownloading) {
+					alert("It's working... Please try again later.");
+					return;
+				}
+
+				function _error(s) {
+					_progress(s, 'error');
+					_end({ 'error': s });
+				}
+				function _end(result) {
+					gd_isdownloading = false;
+					var c = _getid('gd_cancel'); if (c) c.style.display = 'none';
+					callback(result);
+				}
+				function _progress(s, state) {
+					if (!state) state = 'uploaded';
+					var s1 = '<font class="' + state + '">' + henc(s) + '</font> ' + henc(resp.title);
+					//if(!nolog) proc_log('log1',s1);
+					var a = _getid("gd_progress2");
+					if (a) a.innerHTML = s1;
+				}
+
+				gd_isdownloading = true;
+				_getid("downlink2").innerHTML = "<table><tr><td><a href='#' id='gd_cancel' style='display:none' title='Cancel this task'>Cancel</a>&nbsp;<td><div id='gd_progress2'></div></table>";
+				if (resp.fileSize && resp.fileSize > g_maxdown * 1024 * 1024) {
+					_error('Error. The maximum size is about ' + g_maxdown + ' megabytes available.');
+					return;
+				}
+
+				if (fdata.f) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						_progress('File Loaded  -- ');
+						fdata.buffer = new Uint8Array(e.target.result);
+						_end();
+					}
+					reader.onerror = function () {
+						_error('Read Error: ' + fdata.f.name);
+					}
+					if (!reader.readAsArrayBuffer) {
+						_error("Read Error: This browser does not support FileReader API.");
+					} else {
+						reader.readAsArrayBuffer(fdata.f);
+					}
+					return;
+				} else {
+					var xhr = new XMLHttpRequest();
+				}
+
+				var c = _getid('gd_cancel');
+				if (c) {
+					c.style.display = '';
+					c.onclick = function () {
+						xhr.abort();
+						_progress('Canceled.');
+						_end();
+						clearTimeout(looptimer);
+						return false;
+					}
+				}
+				_progress('Downloading...', 'welcome');
+				var downloadurl = resp.downloadUrl;
+
+				function _down() {
+					try {
+						gd_lastprogress = (new Date()).getTime();
+						xhr.open('GET.html', downloadurl.split("&access_token=")[0]);
+						xhr.responseType = 'arraybuffer';
+						xhr.onprogress = function (event) {
+							if (gd_lastprogress) {
+								var elaspetime = new Date();
+								var dt = (elaspetime.getTime() - gd_lastprogress);
+								if (dt < 300) return;
+								gd_lastprogress = elaspetime.getTime();
+							}
+							var a = event;
+							var total = a.totalSize || resp.fileSize || 0;
+							var current = a.position || a.loaded || 0;
+							_progress('Downloading... (' + number_format(current) + '/' + number_format(total) + ')');
+						};
+						if (downloadurl.split("&access_token=")[1]) xhr.setRequestHeader('Authorization', 'Bearer ' + downloadurl.split("&access_token=")[1]);
+						xhr.onload = function () {
+							if (this.status == 200) {
+								_progress('File Downloaded.');
+								fdata.buffer = new Uint8Array(this.response);
+								_end();
+							} else {
+								_error("Error (status) " + this.status + "(" + this.statusText + ") occurred while receiving the file.");
+							}
+						};
+						xhr.onerror = function (e) {
+							_error("Error " + e.target.status + " occurred while receiving the file.");
+						};
+						xhr.send();
+					} catch (err) {
+						_error(err + '\n\nor This browser does not support. Please upgrade your browser.');
+					}
+				}
+				function _get() {
+					var request = gapi.client.drive.files.get({
+						'fileId': resp.id
+					});
+					request.execute(function (result) {
+						if (result.error) {
+							var s = 'Error. ';
+							if (result.error.message) s += result.error.message + ' ';
+							if (result.error.code == 401) s += 'Login or Authorize Error.';
+							_error(s);
+						} else {
+							downloadurl = 'https://www.googleapis.com/drive/v2/files/' + result.id + '?alt=media';//result.downloadUrl;
+							if (downloadurl) {
+								resp = result; //update
+								fdata.resp = result;
+								var a = _getid("attachment");
+								for (var i = 0; i <= a.options.length - 1; i++) {
+									if (a.options[i].value == fdata.idx) {
+										var s = ''; if (fdata.parent) s += fdata.parent + '/';
+										s = s + resp.title + ' (' + getsize(resp.fileSize) + ')'
+										a.options[i].text = s;
+										break;
+									}
+								}
+								attachment_onchange();
+
+								var accessToken = gapi.auth.getToken().access_token;
+								downloadurl += '&access_token=' + encodeURIComponent(accessToken);
+								_down();
+							} else {
+								_error('Error. Can not find a Download URL.');
+							}
+						}
+					});
+				}
+
+				if (downloadurl) {
+					if (!resp.issample) {
+						downloadurl = 'https://www.googleapis.com/drive/v2/files/' + resp.id + '?alt=media';
+						var accessToken = gapi.auth.getToken().access_token;
+						downloadurl += '&access_token=' + encodeURIComponent(accessToken);
+					}
+					_down();
+				} else if (!resp.issample) {
+					gapi.client.load('drive', 'v2', function () {
+						_get();
+					});
+				} else {
+					_error('Error. Can not find a Download URL.');
+				}
+			}
+
+			function find(idx) {
+				for (var i = 0; i <= gd_files.length - 1; i++) {
+					if (gd_files[i].idx == idx) {
+						if (!gd_files[i].buffer) {
+							function go() {
+								f_download(function () {
+									gdata = gd_files[i]; gdata.type = getSupported2(gdata.resp, true);
+									if (gd_files[i].buffer) {
+										handleInput();
+									} else {
+										var v = _getid('loop').value;
+										if (v == 2 || v == 3) {
+											clearTimeout(looptimer);
+											looptimer = setTimeout(function () {
+												player_next(false, true);
+											}, 2000);
+										}
+									}
+								}, gd_files[i]);
+							}
+							if (gd_files[i].f || gd_files[i].resp.issample) {
+								go();
+							} else {
+								gd_checklogin(function () {
+									go();
+								});
+							}
+						} else {
+							var s1 = '<font class="uploaded">File Data Loaded.</font> ' + henc(gd_files[i].resp.title);
+							var a = _getid("gd_progress2");
+							if (a) a.innerHTML = s1;
+							gdata = gd_files[i]; gdata.type = getSupported2(gdata.resp, true);
+							handleInput();
+						}
+						return true;
+					}
+				}
+			}
+
+			if (!_isReady()) return;
+
+			var a = _getid("attachment");
+			if (a.options.length == 0) {
+				if (gdata) {
+					if (gdata.buffer) {
+						if (mplay.pause || mplay.position == 0) mplay.play(true);
+						else mplay.stop(true);
+					}
+				} else {
+					alert('No selected files.');
+				}
+				return;
+			}
+			if (!idx) {
+				for (var i = 0; i <= a.options.length - 1; i++) {
+					if (a.options[i].selected) {
+						idx = a.options[i].value;
+						idx2 = i;
+						break;
+					}
+				}
+			}
+			if (!idx) {
+				idx = a.options[0].value;
+				idx2 = 0;
+			}
+
+			if (control && gdata && gdata.idx == idx) {
+				if (gdata.buffer) {
+					if (mplay.pause || mplay.position == 0) mplay.play(true);
+					else mplay.stop(true);
+				}
+				return;
+			}
+			if (find(idx)) {
+				for (var i = 0; i <= a.options.length - 1; i++) {
+					if (a.options[i].selected) a.options[i].selected = false;
+				}
+				a.selectedIndex = idx2;
+				attachment_onchange();
+			}
+		}
+		function proc_sample() {
+			var arr = [['Carol.mid', '5960'], ['Pathetique.mid', '15424'], ['Pop.mid', '7933'], ['West.mid', '19935'], ['Chariots_of_Fire.mid', '36430'], ['Santorini.mid', '27853'], ['Always.kar', '35415'], ['Victory.hmi', '11490'], ['Credits.hmp', '14107'], ['Song.mus', '13386'], ['Chipsounds.mod', '17560']];
+			var list = [];
+			for (var i = 0; i <= arr.length - 1; i++) {
+				var a = {};
+				a.resp = {};
+				a.resp.title = arr[i][0];
+				a.resp.fileSize = parseInt(arr[i][1]);
+				a.resp.downloadUrl = 'sample/' + arr[i][0];
+				a.resp.issample = true;
+				list.push(a);
+			}
+			gd_addfiles(list);
+		}
+		function _getfrmdoc(ifrm) {
+			return (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+		}
+		function handleFileSelect(files) {
+			if (!window.FileReader) {
+				alert("This browser does not support.");
+				return;
+			}
+			if (gd_isdownloading) {
+				alert("It's working. Please try again later.");
+				return;
+			}
+
+			if (!files || files.length == 0) return;
+			var list = [];
+			for (var i = 0, f; f = files[i]; i++) {
+				var a = {};
+				a.f = f;
+				a.resp = {};
+				a.resp.title = f.name;
+				a.resp.fileSize = f.size;
+				list.push(a);
+			}
+			gd_addfiles(list);
+		}
+
+		function player_stop() {
+			clearTimeout(looptimer);
+			handleInput(true);
+		}
+		function volume_onchange() {
+			var v = _getid('volume').value;
+			mplay.setMasterVolume(v * 16383);
+			_getid('volume2').innerHTML = Math.floor(v * 100);
+			setstorage('c_volume', v);
+		}
+
+		var gprogressdown, progresstimer, looptimer;
+		function progress_onmousedown() {
+			gprogressdown = true;
+		}
+		function progress_onmousemove() {
+			if (gprogressdown) {
+				var len = mplay.length || 0;
+				var v = _getid('progress').value;
+				v = Math.floor(len * v / 100);
+				_getid('progress2').innerHTML = samplesToTime(v) + ' / ' + samplesToTime(len);
+			}
+		}
+		function progress_onmouseup() {
+			var v = _getid('progress').value;
+			if (mplay.length > 0 && mplay.position > 0 && !progresstimer) {
+				if (gdata.type != 'mod' && gdata.type != 'vgm' && gdata.type != 'nsf') mplay.stop();
+				clearTimeout(progresstimer);
+				progresstimer = setTimeout(function () {
+					mplay.position = Math.floor(mplay.length * (v / 100));
+					if (gdata.type != 'mod' && gdata.type != 'vgm' && gdata.type != 'nsf') mplay.play();
+					gprogressdown = false;
+					progresstimer = false;
+				}, 500);
+			} else {
+				gprogressdown = false;
+			}
+		}
+
+		var outputBytes, playtimer;
+		var gworker, isworkerrun, gworkertimer;
+		function handleInput(noplay) {
+			if (!gdata || !gdata.buffer) {
+				mplay.stop();
+				seekSamples = ULONG_MAX;
+				return;
+			}
+			mplay.stop();
+			seekSamples = ULONG_MAX;
+			if (!noplay) {
+				clearInterval(mmpTimer2); clearInterval(abcTimer2); clearInterval(msczTimer2); clearInterval(modTimer2); clearInterval(vgmTimer2); clearInterval(nsfTimer2); clearInterval(mxmlTimer2);
+				if (gdata && gdata.buffer) {
+					if (/\.(mus)$/i.test(gdata.resp.title) && !gdata.converted && !gdata.typedetect) {
+						if (!(gdata.buffer[0] == 0x4D && gdata.buffer[1] == 0x55 && gdata.buffer[2] == 0x53)) {
+							gdata.typedetect = 'adlib';
+						}
+					}
+				}
+				if (gdata.typedetect) gdata.type = gdata.typedetect;
+				var cidx = gdata.idx;
+				function _convert_callback(carr) {
+					if (gdata.idx != cidx) return;
+					gdata.converted = true;
+					gdata.buffer = carr;
+					outputBytes = new Uint8Array(new ArrayBuffer(gdata.buffer.length));
+					outputBytes.set(gdata.buffer);
+					mplay.loadMidiFile(outputBytes);
+					clearTimeout(playtimer);
+					playtimer = setTimeout(function () {
+						mplay.play();
+					}, 500);
+				}
+				function _convert_errcallback(err) {
+					_getid("wml").innerHTML = err;
+				}
+				if (gdata && gdata.type == 'mmp' && !gdata.converted) {
+					function go1() {
+						mmpplay.mod_load(gdata, _convert_callback, _convert_errcallback);
+					}
+					_getid("wml").innerHTML = '';
+					if (!mmpplay) {
+						get_mmpplay();
+						clearInterval(mmpTimer2);
+						mmpTimer2 = setInterval(function () {
+							if (mmpplay) {
+								clearTimeout(mmpTimer2);
+								go1();
+							}
+						}, 500);
+					} else {
+						go1();
+					}
+					return;
+				} else if (gdata && gdata.type == 'abc' && !gdata.converted) {
+					function go3() {
+						abcplay.mod_load(gdata, _convert_callback, _convert_errcallback);
+					}
+					_getid("wml").innerHTML = '';
+					if (!abcplay) {
+						get_abcplay();
+						clearInterval(abcTimer2);
+						abcTimer2 = setInterval(function () {
+							if (abcplay) {
+								clearTimeout(abcTimer2);
+								go3();
+							}
+						}, 500);
+					} else {
+						go3();
+					}
+					return;
+				} else if (gdata && gdata.type == 'mxml' && !gdata.converted) {
+					function go3() {
+						mxmlplay.mod_load(gdata, _convert_callback, _convert_errcallback);
+					}
+					_getid("wml").innerHTML = '';
+					if (!mxmlplay) {
+						get_mxmlplay();
+						clearInterval(mxmlTimer2);
+						mxmlTimer2 = setInterval(function () {
+							if (mxmlplay) {
+								clearTimeout(mxmlTimer2);
+								go3();
+							}
+						}, 500);
+					} else {
+						go3();
+					}
+					return;
+				} else if (gdata && gdata.type == 'mscz' && !gdata.converted) {
+					if (!asyncsupported) {
+						_convert_errcallback('<font class=error>Error. This browser does not support the MSCZ processing.</font>');
+						return;
+					}
+					//if(gworking){alert("It's working... Please try again later.");return;}
+					function go2() {
+						gworking = true;
+						_getid("wml").innerHTML = 'Creating a MIDI file... Please wait a moment.';
+						msczplay.mod_load(gdata, function (carr) { //convert
+							gworking = false; _getid("wml").innerHTML = '';
+							_convert_callback(carr);
+						}, function (err) {
+							gworking = false;
+							_convert_errcallback(err);
+							clean_msczplay();
+						});
+					}
+					_getid("wml").innerHTML = '';
+					if (!msczplay) {
+						gworking = true;
+						get_msczplay();
+						clearInterval(msczTimer2);
+						msczTimer2 = setInterval(function () {
+							if (msczplay) {
+								clearTimeout(msczTimer2);
+								go2();
+							}
+						}, 500);
+					} else {
+						go2();
+					}
+					return;
+				} else if (gdata && gdata.type == 'adlib' && !gdata.converted) {
+					if (!asyncsupported) {
+						_convert_errcallback('<font class=error>Error. This browser does not support the AdLib processing.</font>');
+						return;
+					}
+					if (gdata.buffer.length > 1 * 1024 * 1024) {
+						_convert_errcallback('<font class=error>Error. The maximum size is about 1 megabytes available.</font>');
+						return;
+					}
+					function run() {
+						gworker.postMessage({ type: gdata.type, buffer: gdata.buffer, resp: gdata.resp });
+					}
+					if (isworkerrun) {
+						if (gworker) { gworker.terminate(); gworker = null; }
+					}
+					_getid("wml").innerHTML = '';
+					var isnew;
+					if (!gworker) {
+						isnew = true; gworker = new Worker('js/worker.js');
+						_getid("wml").innerHTML = 'Creating a VGM file... Please wait a moment.';
+					} else {
+						clearTimeout(gworkertimer);
+						gworkertimer = setTimeout(function () {
+							_getid("wml").innerHTML = 'Creating a VGM file... Please wait a moment.';
+						}, 2500);
+					}
+					isworkerrun = true;
+					gworker.onerror = function (err) {
+						isworkerrun = false; clearTimeout(gworkertimer);
+						var s = '';
+						if (err && (typeof err === 'string' || err instanceof String)) s += err;
+						else if (err && err.message) s += err.message;
+						_convert_errcallback('<font class=error>' + henc(s) + '</font>');
+					}
+					gworker.onmessage = function (event) {
+						var wmsg = event.data;
+						if (wmsg.type == "ready") {
+							run();
+						} else if (wmsg.type == "error") {
+							isworkerrun = false; clearTimeout(gworkertimer);
+							_convert_errcallback('<font class=error>' + henc(wmsg.data) + '</font>');
+						} else if (wmsg.type == "progress") {
+							_getid("wml").innerHTML = henc(wmsg.data);
+						} else if (wmsg.type == "result") {
+							isworkerrun = false; clearTimeout(gworkertimer);
+							if (wmsg.data) {
+								if (gdata.idx != cidx) return;
+								gdata.converted = true; gdata.type = 'vgm';
+								gdata.buffer = wmsg.data;
+								go_main();
+							} else {
+								_convert_errcallback('<font class=error>Failed to convert to the VGM file.</font>');
+							}
+						}
+					}
+					if (!isnew) run();
+					return;
+				} else if (gdata && gdata.type == 'adlib' && gdata.converted) {
+					gdata.type = 'vgm';
+				}
+				if (msczplay && (!gdata || gdata.type != 'mscz')) {
+					clean_msczplay();
+				}
+				if (isworkerrun) {
+					if (gworker) { gworker.terminate(); gworker = null; }
+				}
+				function go_main() {
+					outputBytes = new Uint8Array(new ArrayBuffer(gdata.buffer.length));
+					outputBytes.set(gdata.buffer);
+
+					if (gdata && gdata.type == 'mod') {
+						if (!modplay) {
+							get_modplay();
+							clearInterval(modTimer2);
+							modTimer2 = setInterval(function () {
+								if (modplay) {
+									clearTimeout(modTimer2);
+									if (gdata.idx != cidx) return;
+									mplay.loadModFile(outputBytes);
+									mplay.play();
+								}
+							}, 500);
+						} else {
+							mplay.loadModFile(outputBytes);
+							mplay.play();
+						}
+					} else if (gdata && gdata.type == 'vgm') {
+						if (!vgmplay) {
+							get_vgmplay();
+							clearInterval(vgmTimer2);
+							vgmTimer2 = setInterval(function () {
+								if (vgmplay) {
+									clearTimeout(vgmTimer2);
+									if (gdata.idx != cidx) return;
+									mplay.loadVGMFile(outputBytes);
+									mplay.play();
+								}
+							}, 500);
+						} else {
+							mplay.loadVGMFile(outputBytes);
+							mplay.play();
+						}
+					} else if (gdata && gdata.type == 'nsf') {
+						if (!nsfplay) {
+							get_nsfplay();
+							clearInterval(nsfTimer2);
+							nsfTimer2 = setInterval(function () {
+								if (nsfplay) {
+									clearTimeout(nsfTimer2);
+									if (gdata.idx != cidx) return;
+									mplay.loadNSFFile(outputBytes);
+									mplay.play();
+								}
+							}, 500);
+						} else {
+							mplay.loadNSFFile(outputBytes);
+							mplay.play();
+						}
+					} else {
+						mplay.loadMidiFile(outputBytes);
+						clearTimeout(playtimer);
+						playtimer = setTimeout(function () {
+							mplay.play();
+						}, 500);
+					}
+				}
+				go_main();
+			}
+		}
+		function loop_onchange() {
+			var v = _getid('loop').value;
+			if (v == 1) {
+				mplay.setLoop(true);
+			} else {
+				mplay.setLoop(false);
+			}
+			setstorage('c_loop', v);
+		}
+		function player_next(isprev, isloop) {
+			if (!gdata) {
+				player_play('', '', true);
+				return;
+			}
+			var v = _getid('loop').value;
+			var a = _getid("attachment");
+			var c = a.options.length;
+			if (c == 0) {
+				show_message("No files.");
+				return;
+			}
+			if (v == 3) {
+				var d = Math.floor(Math.random() * c);
+				if (a.options[d]) player_play(a.options[d].value, d);
+			} else {
+				for (var i = 0; i <= a.options.length - 1; i++) {
+					if (a.options[i].value == gdata.idx) {
+						var i2;
+						if (isprev) {
+							if (a.options[i - 1]) i2 = i - 1;
+							else {
+								show_message("It's first.");
+								return;
+							}
+						} else {
+							if (a.options[i + 1]) i2 = i + 1;
+							else {
+								show_message("It's last.");
+								return;
+							}
+						}
+						player_play(a.options[i2].value, i2);
+						return;
+					}
+				}
+				player_play('', '', true);
+			}
+		}
+
+		setInterval(function () {
+			if (!_isReady()) return;
+			if (!gprogressdown) {
+				_getid('progress').value = (mplay.position / mplay.length) * 100;
+				_getid('progress2').innerHTML = samplesToTime(mplay.position) + ' / ' + samplesToTime(mplay.length);
+			}
+		}, 700);
+
+		function player_init() {
+			_getid("dfile1").innerHTML = '<input type="file" id="fileload1" name="files[]" multiple style="display:none"><button type="button" onclick="document.getElementById(\'fileload1\').click()" style="width:75px;padding:1px;margin-left:10px" title="Get MIDI files from your computer. Drop files on this page.">IMPORT</button>';
+			_getid('fileload1').onchange = function (e) {
+				if (!e || !e.target) {
+					alert("This browser does not support that.");
+					return;
+				}
+				handleFileSelect(e.target.files);
+			}
+			var holder = document;
+			holder.ondragover = function (e) {
+				_getid('divopen').className = 'hover';
+				try {
+					var ua = navigator.userAgent;
+					if (ua && ua.indexOf("Chrome") >= 0) {
+						if (e.originalEvent) e = e.originalEvent;
+						if (e.dataTransfer) {
+							var b = e.dataTransfer.effectAllowed;
+							e.dataTransfer.dropEffect = ('move' === b || 'linkMove' === b) ? 'move' : 'copy';
+						}
+					}
+				} catch (err) { }
+				return false;
+			};
+			holder.ondragend = function () { _getid('divopen').className = ''; return false; };
+			holder.ondrop = function (e) {
+				_getid('divopen').className = '';
+				e.preventDefault();
+				handleFileSelect(e.dataTransfer.files);
+				return false;
+			};
+			//if(navigator.userAgent && navigator.userAgent.toLowerCase().indexOf("windows")>=0){
+			var a = _getid('fileload1');
+			var arr2 = [];
+			var arr = g_supportimgs.split(',');
+			for (var i = 0; i <= arr.length - 1; i++) {
+				var s = trim(arr[i]);
+				if (s) {
+					arr2.push('.' + s);
+				}
+			}
+			a.setAttribute("accept", arr2.join(','));
+			//}
+
+			_getid("attachment").onkeydown = function (e) {
+				if (!e) e = window.event;
+				var code = e.keyCode;
+				var press_ctrl = typeof e.modifiers == 'undefined' ? e.ctrlKey : e.modifiers & Event.CONTROL_MASK;
+				var press_alt = typeof e.modifiers == 'undefined' ? e.altKey : e.modifiers & Event.ALT_MASK;
+				var press_shift = typeof e.modifiers == 'undefined' ? e.shiftKey : e.modifiers & Event.SHIFT_MASK;
+				var flag = false;
+				if (press_alt && !press_ctrl && !press_shift) {
+					flag = true;
+					if (code == 38) {
+						attach_move(0);
+					} else if (code == 40) {
+						attach_move(1);
+					} else {
+						flag = false;
+					}
+				} else if (!press_alt && !press_ctrl && !press_shift) {
+					flag = true;
+					if (code == 46) {
+						attach_delete();
+					} else if (code == 13) {
+						player_play();
+					} else {
+						flag = false;
+					}
+				}
+				if (flag) {
+					if (e.preventDefault) { e.preventDefault(); e.stopPropagation(); }
+					else { e.returnValue = false; e.cancelBubble = true; }
+				}
+			}
+
+			var s = getstorage('c_volume') || 0.5;
+			_getid('volume').value = s;
+			var s = getstorage('c_loop') || 0;
+			_getid('loop').value = s;
+
+			mplay.setLoop(_getid('loop').checked);
+			mplay.setCC111Loop(false);
+			mplay.setFalcomLoop(false);
+			mplay.setMFiLoop(false);
+			mplay.setMasterVolume(_getid('volume').value * 16383);
+
+			volume_onchange();
+			loop_onchange();
+			_getid('playertype').value = "2";
+
+			var a = window.AudioContext || window.webkitAudioContext;
+			if (!a) {
+				_getid('wml').innerHTML = '<div id="notsupport" style="color:#aa2222;font-size:17px;text-align:center;margin:10px">This browser does not support HTML5 Web Audio.</div>';
+			}
+			try {
+				eval('async () => {}');
+				if (window.WebAssembly) asyncsupported = true;
+			} catch (err) { }
+		}
+		player_init();
+	</script>
+
+	<iframe id="framemodplay" style="display:none;width:0px;"></iframe>
+	<iframe id="framevgmplay" style="display:none;width:0px;"></iframe>
+	<iframe id="framemmpplay" style="display:none;width:0px;"></iframe>
+	<iframe id="framensfplay" style="display:none;width:0px;"></iframe>
+	<iframe id="framemsczplay" style="display:none;width:0px;"></iframe>
+	<iframe id="frameabcplay" style="display:none;width:0px;"></iframe>
+	<iframe id="framemxmlplay" style="display:none;width:0px;"></iframe>
+	<script>
+		function gd_findscope(a) {
+			try {
+				if (!a) return !1; a = " " + a.toLowerCase() + " "; var b = SCOPES; SCOPES.split && "string" === typeof SCOPES && (b = SCOPES.split(" ")); for (var c = 0; c < b.length; c++)if (b[c]) {
+					var d = (b[c].split("index.html").pop().toLowerCase() || "").replace(/^\s*|\s*$/g, ""); "drive.appfolder" == d && (d = "drive.appdata"); if (/^(drive\.install|drive\.file|drive|drive\.readonly|drive\.appdata|drive\.appfolder|documents|spreadsheets|script\.external_request|calendar|gmail\.send|gmail\.compose|gmail\.readonly|youtube|books|drive\.activity\.readonly|drive\.activity|drive\.apps\.readonly|drive\.metadata|drive\.metadata\.readonly|drive\.scripts)$/.test(d) &&
+						0 > a.indexOf(d + " ")) return !1
+				}
+			} catch (e) { } return !0
+		}
+		function init_fix_scope() {
+			var a = window.gd_login_manual, b = window.gd_login; a || (a = window.proc_login_manual); b || (b = window.proc_login); a && (a += ""); b && (b += ""); a && 0 <= a.indexOf("if (authResult && !authResult.error") && 0 > a.indexOf("gd_findscope(") ? (a = a.replace("if (authResult && !authResult.error", "if (authResult && !authResult.error && gd_findscope(authResult.scope)"), window.eval(a)) : a && 0 <= a.indexOf("if (authResult && (!authResult.error || authResult.access_token)") && 0 > a.indexOf("gd_findscope(") && (a = a.replace("if (authResult && (!authResult.error || authResult.access_token)",
+				"if (authResult && (!authResult.error || authResult.access_token) && gd_findscope(authResult.scope)"), window.eval(a)); b && 0 <= b.indexOf("if (authResult && !authResult.error") && 0 > b.indexOf("gd_findscope(") ? (b = b.replace("if (authResult && !authResult.error", "if (authResult && !authResult.error && gd_findscope(authResult.scope)"), window.eval(b)) : b && 0 <= b.indexOf("if (authResult && (!authResult.error || authResult.access_token)") && 0 > b.indexOf("gd_findscope(") && (b = b.replace("if (authResult && (!authResult.error || authResult.access_token)",
+					"if (authResult && (!authResult.error || authResult.access_token) && gd_findscope(authResult.scope)"), window.eval(b))
+		} init_fix_scope();
+	</script>
+
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:11:54 GMT -->
+
+</html>

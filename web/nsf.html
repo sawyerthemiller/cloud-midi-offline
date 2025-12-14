@@ -1,0 +1,155 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/nsf.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<script src="midi/libgme.js"></script>
+</head>
+<body>
+
+<script>
+if(self===top){
+	top.location='index.html';
+}
+
+var SAMPLE_RATE=44100;
+var ctx, node, emu, ref, subtune_count, subtune, gainNode;
+var end_callback2;
+
+function mod_load(value,end_callback){
+	function _error(s){
+		setTimeout(function(){
+			//console.log(s);
+			if(end_callback) end_callback(s);
+		},100);
+	}
+
+	subtune_count=0;
+	end_callback2='';
+	if(!ctx){
+		ctx=new (window.AudioContext || window.webkitAudioContext)();
+	}
+	if(!Module || !Module.ccall || !ctx){
+		_error('This browser does not support.');
+		return;
+	}
+
+	ref = Module.allocate(1, 'i32', Module.ALLOC_STATIC);
+    var samplerate = ctx.sampleRate;
+    if (Module.ccall('gme_open_data', 'number', ['array', 'number', 'number', 'number'], [value, value.length, ref, samplerate]) != 0) {
+		_error('File data failed to open.');
+		return;
+    }
+
+    emu = Module.getValue(ref, 'i32');
+    subtune_count = Module.ccall('gme_track_count', 'number', ['number'], [emu]);
+	//console.log('Track count: ', subtune_count);
+	if(subtune_count<=0){		
+		_error('Track count is zero. Can not find the track to play.');
+		return;
+	}
+	subtune=0;
+	end_callback2=end_callback;
+	Module.ccall('gme_ignore_silence', 'number', ['number'], [emu, 0]); //1    
+}
+
+function playtrack(track){
+	if(track<0 || track>subtune_count-1){
+		if(end_callback2) end_callback2();
+		return;
+	}
+
+	subtune=track;
+    if (Module.ccall('gme_start_track', 'number', ['number', 'number'], [emu, subtune]) != 0) {
+		//console.log('Failed to load track.');
+		if(end_callback2) end_callback2();
+		return;
+    }
+    var bufferSize = 1024 * 16;
+    var inputs = 2;
+    var outputs = 2;
+
+    if (!node && ctx.createJavaScriptNode) {
+		node=ctx.createJavaScriptNode(bufferSize, inputs, outputs);
+    }
+    if (!node && ctx.createScriptProcessor) {
+		node = ctx.createScriptProcessor(bufferSize, inputs, outputs);
+    }
+
+    var buffer = Module.allocate(bufferSize * 2, 'i32', Module.ALLOC_STATIC);
+    var INT16_MAX = Math.pow(2, 32) - 1;
+
+    node.onaudioprocess=function(e){
+      if (Module.ccall('gme_track_ended', 'number', ['number'], [emu]) == 1) {
+        //console.log('end.');
+        node.disconnect();
+		setTimeout(function(){
+			track++;
+			playtrack(track);
+		},10);
+        return;
+      }
+
+      var channels = [e.outputBuffer.getChannelData(0), e.outputBuffer.getChannelData(1)];
+
+      var err = Module.ccall('gme_play', 'number', ['number', 'number', 'number'], [emu, bufferSize * 2, buffer]);
+      for (var i = 0; i < bufferSize; i++) {
+        for (var n = 0; n < e.outputBuffer.numberOfChannels; n++) {
+          channels[n][i] = Module.getValue(buffer + i * e.outputBuffer.numberOfChannels * 2 + n * 4, 'i32') / INT16_MAX;
+        }
+      }
+	  //console.log(channels);
+    }
+
+	if(!gainNode){
+		if (!ctx.createGain) ctx.createGain = ctx.createGainNode;
+		gainNode = ctx.createGain();
+	}
+	node.connect(gainNode);
+	gainNode.connect(ctx.destination);
+}
+
+function mod_play(){	
+	if(!subtune_count) return;
+	if(node) node.disconnect();
+	playtrack(0);
+}
+function mod_stop(){
+	if(!subtune_count) return;
+	subtune=-1;
+    if(node) node.disconnect();
+	/*if(Module.ccall('gme_delete', 'number', ['number'], [emu]) != 0) {
+		console.log('Failed to stop track.');
+	}*/
+}
+function mod_paused(){
+	return false;
+}
+function mod_togglePause(){
+}
+function mod_get_position(){
+	if(!subtune_count)return;
+	return (subtune+1)*SAMPLE_RATE;
+}
+function mod_set_position(value){
+	if(!subtune_count)return;
+	var track=Math.round(value/SAMPLE_RATE);
+	//console.log(track);
+	playtrack(track);
+}
+function mod_length(){
+	if(!subtune_count)return;
+	return subtune_count*SAMPLE_RATE;
+}
+function mod_set_volume(value){
+	if(!subtune_count)return;
+	if(gainNode){
+		gainNode.gain.value=value;
+	}
+}
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/nsf.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+</html>

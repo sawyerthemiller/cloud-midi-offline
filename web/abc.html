@@ -1,0 +1,90 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/abc.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+<script>
+if(self===top){
+	top.location='index.html';
+}
+
+var mod_load='';
+var errmsg='';
+function print(text) {
+	//if(text) errmsg=text;
+	//console.log('print:'+text);
+}
+function printErr(text) {
+	//console.log('printErr:'+text);
+}
+var Module = {
+	TOTAL_MEMORY: 48*1024*1024,
+	print: print, printErr: printErr,
+	onRuntimeInitialized:function(){
+		mod_load=mod_load2;
+	}	
+}
+
+function html_entity_encode(str){
+	if (!str || !str.replace) str='';
+  str = str.replace(/&/gi, "&amp;");
+  str = str.replace(/>/gi, "&gt;");
+  str = str.replace(/</gi, "&lt;");
+  str = str.replace(/\"/gi, "&quot;");
+  str = str.replace(/\'/gi, "&#039;");
+  return str;
+}
+var henc=html_entity_encode;
+function shortstring(s,len){
+	if (!s) s='';
+	if (s.length > len) s=s.substr(0,len)+"...";
+	return s;
+}
+
+//convert
+function mod_load2(gdata, callback, errcallback){
+try{
+	errmsg='';
+	var data=gdata.buffer;
+	var inFile = "in.abc";	
+	try{
+		if(FS.analyzePath("/"+inFile).exists) FS.unlink("/"+inFile);
+	}catch(err){}		
+	try{
+		if(FS.analyzePath("out.html").exists) FS.unlink("out.html");
+	}catch(err){}		
+	
+	FS.createDataFile("index.html", inFile, data, true, true);
+	var result=Module._abc2midiC();
+
+	var handle = FS.analyzePath("index.html");
+	if (handle && handle.object && handle.object.contents) {
+		for (var i in handle.object.contents) {
+			if(i=="out.mid" && handle.object.contents.hasOwnProperty(i)){
+				var narr=handle.object.contents[i].contents;
+				if(narr && narr.subarray){
+					if(handle.object.contents[i].usedBytes!=narr.length) narr=narr.subarray(0, handle.object.contents[i].usedBytes || 0); 
+				}else{
+					narr=new Uint8Array(narr);
+				}			  
+				callback(narr);
+				return;
+			}
+		}
+	}
+	errcallback('<font class=error>Error. This file format does not support. '+henc(shortstring(errmsg+'',100))+'</font>');
+}catch(err){
+	errcallback('<font class=error>Error. This file format does not support. '+henc(shortstring(err+'',100))+'</font>');
+}
+}
+</script>
+
+<script src="http://iblogbox.github.io/js/midi/abc2midi.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/abc.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:18 GMT -->
+</html>

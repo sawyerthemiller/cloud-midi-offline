@@ -1,0 +1,85 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mscz.php?t= by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="http://iblogbox.github.io/js/midi/webmscore0.16.0/webmscore.js"></script>
+</head>
+<body>
+<script>
+if(self===top){
+	top.location='index.html';
+}
+
+function html_entity_encode(str){
+	if (!str || !str.replace) str='';
+  str = str.replace(/&/gi, "&amp;");
+  str = str.replace(/>/gi, "&gt;");
+  str = str.replace(/</gi, "&lt;");
+  str = str.replace(/\"/gi, "&quot;");
+  str = str.replace(/\'/gi, "&#039;");
+  return str;
+}
+var henc=html_entity_encode;
+function shortstring(s,len){
+	if (!s) s='';
+	if (s.length > len) s=s.substr(0,len)+"...";
+	return s;
+}
+function getfileext(s){
+	if(!s) s='';
+	var arr=s.split('.');
+	if(arr.length>1){
+		return arr[arr.length-1].toLowerCase();
+	}
+	return '';
+}
+
+var loaded=false;
+WebMscore.ready.then(async function(){
+	loaded=true;
+});
+
+//convert
+function mod_load(gdata, callback, errcallback){
+try{
+	var maxsize=4;
+	if(gdata.resp.fileSize>maxsize*1024*1024){
+		errcallback('<font class=error>Error. The maximum size is about '+maxsize+' megabytes available.</font>');			
+		return;
+	}
+	var mtype='mscz';
+	if(getfileext(gdata.resp.title)=='mscx') mtype='mscx';
+	
+	var outputBytes = new Uint8Array(new ArrayBuffer(gdata.buffer.length));
+	outputBytes.set(gdata.buffer);
+	async function go1(){
+		//console.log(outputBytes);
+		try{
+		    var score = await WebMscore.load(mtype, outputBytes);
+			//console.log(score);
+			var array=await score.saveMidi();
+			//console.log(array);
+			if(array.length>50){
+				callback(array);
+			}else{
+				errcallback('<font class=error>Error. This file format does not support, or Created in a newer version.</font> <a href="https://waview.newappzone.com/" title="Convert a mscz/mscx file to MID file">Convert to MID file</a>');
+			}
+			if(score.worker) score.worker.terminate(); //free
+			score.destroy();			
+		}catch(err){
+			errcallback('<font class=error>Error. '+henc(shortstring(err+'',100))+'</font> <a href="https://waview.newappzone.com/" title="Convert a mscz/mscx file to MID file">Convert to MID file</a>');
+		}				
+	}
+	go1();
+}catch(err){
+	errcallback('<font class=error>Error. '+henc(shortstring(err+'',100))+'</font>');
+}
+}
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mscz.php?t= by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+</html>

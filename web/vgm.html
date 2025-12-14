@@ -1,0 +1,300 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/vgm.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<script type="text/javascript" src="http://hangul77.github.io/midi/vgmplay-js.js"></script>
+</head>
+<body>
+
+<script>
+if(self===top){
+	top.location='index.html';
+}
+var player;
+var modbuffer='';
+var SAMPLE_RATE=44100;
+Module['onRuntimeInitialized'] = function() {
+}
+
+function vgm(){
+	this.init=function(){
+		this.position=0;
+		this.positionTimer;
+
+		this.VGMPlay_Init = Module.cwrap('VGMPlay_Init');
+		this.VGMPlay_Init2 = Module.cwrap('VGMPlay_Init2');
+		this.FillBuffer = Module.cwrap('FillBuffer2','number',['number','number']);
+		this.OpenVGMFile = Module.cwrap('OpenVGMFile','number',['string']);
+		this.CloseVGMFile = Module.cwrap('CloseVGMFile');
+		this.PlayVGM = Module.cwrap('PlayVGM');
+		this.StopVGM = Module.cwrap('StopVGM');
+		this.VGMEnded = Module.cwrap('VGMEnded');
+		this.GetTrackLength = Module.cwrap('GetTrackLength');
+		this.GetLoopPoint = Module.cwrap('GetLoopPoint');
+		this.SeekVGM = Module.cwrap('SeekVGM','number',['number','number']);
+		this.SetSampleRate = Module.cwrap('SetSampleRate','number',['number']);
+		this.SetLoopCount = Module.cwrap('SetLoopCount','number',['number']);
+		this.SamplePlayback2VGM = Module.cwrap('SamplePlayback2VGM','number',['number']);
+
+		this.dataPtrs = [];
+		this.dataPtrs[0] = Module._malloc(16384*2);
+		this.dataPtrs[1] = Module._malloc(16384*2);
+
+		this.dataHeaps = [];
+		this.dataHeaps[0] = new Int16Array(Module.HEAPU8.buffer, this.dataPtrs[0], 16384);
+		this.dataHeaps[1] = new Int16Array(Module.HEAPU8.buffer, this.dataPtrs[1], 16384);
+
+		this.buffers = [];
+		this.buffers[0] = [];
+		this.buffers[1] = [];
+
+		this.results = [];
+	}
+
+	this.initialise=function() {
+		this.context = new (window.AudioContext || window.webkitAudioContext)();
+		this.sampleRate = this.context.sampleRate;
+		//this.sampleRate = sampleRate;
+		//this.loopCount = loopCount;
+
+		this.VGMPlay_Init();
+		if (this.sampleRate) this.SetSampleRate(this.sampleRate);
+		if (this.loopCount) this.SetLoopCount(this.loopCount); else this.loopCount = 2;
+		this.VGMPlay_Init2();
+
+		this.initialised = true;
+	}
+
+	this.setLoopCount=function(loopCount) {
+		this.loopCountSetter = loopCount;
+		if (this.loopCount !== this.loopCountSetter) {
+			this.loopCount = this.loopCountSetter;
+			this.SetLoopCount(this.loopCount);
+		}
+	}
+
+	this.load=function(fileName) {
+		this.stop();
+
+		this.fileName = fileName;		
+		if (!this.initialised) this.initialise();
+
+		this.OpenVGMFile(fileName);
+	}
+
+	this.play=function() {
+		this.stop();
+
+		if(!this.node){
+			this.node = this.context.createScriptProcessor(16384, 2, 2);
+		}
+		if(!this.gainNode){
+			if (!this.context.createGain) this.context.createGain = this.context.createGainNode;
+			this.gainNode = this.context.createGain();
+		}
+		this.node.connect(this.gainNode);
+		this.gainNode.connect(this.context.destination);
+		//this.node.connect(this.context.destination);
+
+		/*this.delayedAudible = this.context.createDelay();
+		this.delayedAudible.delayTime.value = 0.26;
+		this.gainNode.connect(this.delayedAudible)
+		this.delayedAudible.connect(this.context.destination);*/
+
+		this.isPaused = false;
+
+		if (this.isPlaying) {
+			this.StopVGM();
+		} else {
+			this.isPlaying = true;
+		}
+		this.PlayVGM();
+
+		this.resetTimer();
+		this.position=0;
+
+		this.playAudio();
+	}
+
+	this.stop=function() {
+		if (this.isPlaying) {
+			clearInterval(this.positionTimer);
+			this.position=0;
+			this.StopVGM();
+			this.CloseVGMFile();
+			this.isPlaying = false;
+			this.stopAudio();
+		}
+	}
+
+	this.resetTimer=function(){
+		clearInterval(this.positionTimer);
+		this.positionTimer=setInterval(function(){
+			this.position++;
+		},1000);		
+	}
+
+	this.generateBuffer=function() {
+		this.FillBuffer(this.dataHeaps[0].byteOffset, this.dataHeaps[1].byteOffset);
+
+		this.results[0] = new Int16Array(this.dataHeaps[0].buffer, this.dataHeaps[0].byteOffset, 16384);
+		this.results[1] = new Int16Array(this.dataHeaps[1].buffer, this.dataHeaps[1].byteOffset, 16384);
+
+		for (var i = 0; i < 16384; i++) {
+			this.buffers[0][i] = this.results[0][i] / 32768;
+			this.buffers[1][i] = this.results[1][i] / 32768;
+		}
+	}
+
+	this.playAudio=function() {
+		var self=this;
+		this.generateBuffer();
+
+		this.node.onaudioprocess = function (e) {
+			this.output0 = e.outputBuffer.getChannelData(0);
+			this.output1 = e.outputBuffer.getChannelData(1);
+			if (self.VGMEnded()) {
+				//self.node.disconnect(self.context.destination);
+				if (self.callbackTrackEnd) self.callbackTrackEnd();
+			}
+			for (var i = 0; i < 16384; i++) {
+				this.output0[i] = self.buffers[0][i];
+				this.output1[i] = self.buffers[1][i];
+			}
+			self.generateBuffer();
+		}
+	}
+
+	this.stopAudio=function() {
+		if(!this.isPaused) this.node.disconnect(this.gainNode);
+		//this.context.close();
+		this.node.onaudioprocess=null;
+		this.node=null;
+		this.gainNode.disconnect();
+		this.gainNode=null;
+
+		this.isPaused = true;
+	}
+	this.togglePause=function() {
+		if (this.isPlaying) {
+			if (!this.isPaused) {
+				this.node.disconnect(this.gainNode);
+				this.isPaused = true;
+				clearInterval(this.positionTimer);
+			} else {
+				this.node.connect(this.gainNode);
+				this.isPaused = false;
+				this.resetTimer();
+			}
+		}
+	}	
+
+	this.getTrackInfo=function(){
+		this.trackLength = Math.floor(this.GetTrackLength()/44100);
+		this.loopPoint = Math.floor(this.GetLoopPoint()/44100);
+		this.initialLength = Math.floor(this.trackLength-((this.loopCount-1)*this.loopPoint));
+		this.trackInfo = {trackLength:this.trackLength, loopPoint:this.loopPoint, loopCount:this.loopCount, initialLength:this.initialLength};
+		return this.trackInfo;
+	}
+
+	this.seek=function(seconds) {
+		this.SeekVGM(0,this.SamplePlayback2VGM(seconds*44100));
+		this.resetTimer();
+		this.position=seconds;
+	}
+	
+	this.setVolume=function(value){
+		if(this.gainNode){
+			this.gainNode.gain.value=value;
+		}
+	}
+
+	return this;
+}
+
+try{
+	player=vgm();
+	player.init();
+}catch(err){
+	player='';
+}
+</script>
+
+<script>
+function mod_load(value,end_callback){
+	if(!player){
+		alert('This browser does not support.');
+		return;
+	}
+	modbuffer=value;
+	player.callbackTrackEnd=function(){
+		player.stop();
+		//player.seek(0);
+		//console.log('end');
+		if(end_callback) end_callback();
+	}
+}
+function mod_play(){	
+	if(modbuffer){
+		//console.log('mod_play');
+		if(!player)return;
+		try {
+			FS.unlink("dnd.vgm");
+		}catch(err) {}
+		FS.createDataFile("index.html", "dnd.vgm", modbuffer, true, true);
+		player.setLoopCount(1);
+		player.load("dnd.vgm");
+		player.play();
+	}
+}
+function mod_stop(){
+	//console.log('mod_stop');
+	if(!player)return;
+	player.stop();
+}
+function mod_paused(){
+	if(!player)return;
+	if(player.isPlaying) return player.isPaused;
+	else return false;
+}
+function mod_togglePause(){
+	//console.log('mod_togglePause');
+	if(!player)return;
+	player.togglePause();
+}
+function mod_get_position(){
+	if(!player)return;
+	var t=player.position || 0;
+	t=t*SAMPLE_RATE;
+	return t;	
+}
+function mod_set_position(value){
+	//console.log(value);
+	if(!player)return;
+	var t=value/SAMPLE_RATE;
+	player.seek(t);
+}
+var is_mac = (navigator.userAgent.indexOf("Mac") >=0 ) ? true : false;
+function mod_length(){
+	if(!player)return;
+	var a=player.getTrackInfo();
+	if(a){
+		var t=(a.trackLength || 0);
+		if(is_mac) t=t+(t*0.04);
+		else t=t+(t*0.12);
+		return t*SAMPLE_RATE;
+	}else{
+		return 0;
+	}
+}
+function mod_set_volume(value){
+	if(!player)return;
+	player.setVolume(value);
+}
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/vgm.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+</html>

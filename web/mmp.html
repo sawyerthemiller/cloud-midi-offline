@@ -1,0 +1,370 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mmp.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://iblogbox.github.io/js/midi/pako.min.js"></script>
+</head>
+<body>
+<script>
+if(self===top){
+	top.location='index.html';
+}
+if (!Math.log2) Math.log2 = function(x) {
+  return Math.log(x) * Math.LOG2E;
+}
+if (!Math.sign) {
+  Math.sign = function(x) {
+    // If x is NaN, the result is NaN.
+    // If x is -0, the result is -0.
+    // If x is +0, the result is +0.
+    // If x is negative and not -0, the result is -1.
+    // If x is positive and not +0, the result is +1.
+    return ((x > 0) - (x < 0)) || +x;
+    // A more aesthetic pseudo-representation:
+    //
+    // ( (x > 0) ? 1 : 0 )  // if x is positive, then positive one
+    //          +           // else (because you can't be both - and +)
+    // ( (x < 0) ? -1 : 0 ) // if x is negative, then negative one
+    //         ||           // if x is 0, -0, or NaN, or not a number,
+    //         +x           // then the result will be x, (or) if x is
+    //                      // not a number, then x converts to number
+  };
+}
+
+var exportMutedBool = false;
+function log(a){console.log(a);}
+
+function c(n){
+	if(n<=255 && n>=0){
+		return String.fromCharCode(n);
+	}
+	else{
+		//window.alert("c() - Number out of bounds: " + n);
+		return String.fromCharCode(0); //-1
+	}
+}
+function cb(n){return (n).toString(16) + " ";}//returns hex values
+
+function getBytesFromNum(num,padding){//Takes a number and gives bytes with padding -- should replace getBytesFromNum
+	if(!padding)padding=0;
+	var parts = [];
+	for (var i=0; i<padding;i++){parts[i] = 0;}
+	if (num == 0){return c(0);}
+	if(num==Infinity) num=100000;
+	for (var i=0; num != 0;i++){//While there is still some number left to divide
+		parts[i] = (num % 256); //Assign the remainder
+		num = (num-parts[i])/256; //Divide the rest
+		if(i>500000){ //Infinity
+			throw "Infinity loop from getBytesFromNum";
+			break;
+		}
+	}
+	outputString = "";
+	for (var i = parts.length-1;i>=0;i--){//for each of the parts, Combine them into a string
+		outputString += c(parts[i]);
+		//outputString += cb(parts[i]) + " ";//Used for debugging
+	}
+	return outputString;
+}
+
+function getVariableLength(num){//Takes a number and gives a string of bytes indicating variable length
+	var parts = [];
+	if (num == 0){return c(0);}
+	if(num==Infinity) num=100000;
+	for (var i=0; num != 0;i++){//While there is still some number left to divide
+		parts[i] = (num % 128); //Assign the remainder
+		num = (num-parts[i])/128; //Divide the rest
+		if(i>500000){ //Infinity
+			throw "Infinity loop from getVariableLength";
+			break;
+		}
+	}
+	outputString = "";
+	for (var i = parts.length-1;i>=0;i--){//Combine all the parts
+		outputString += c(parseInt((Math.sign(i)*128)+parts[i]));//add B1000000 to all but the last bit
+	}
+	return outputString;
+}
+
+//var upload = document.getElementById("upload");
+//var output = document.getElementById("output"); //use this for outputting stuff
+function endTrack(trackString){
+	var outputString = trackString;
+	outputString += c(0) + c(255) + c(47) + c(0); //FF 2F 00 - end of track at 0 time after list event
+	var trackLength = outputString.length;//Find how long the track is
+	outputString = "MTrk" +  getBytesFromNum(trackLength,4) + outputString
+	return (outputString);
+}
+	
+function getAllNotesInPattern(pattern,basslineTrue){
+	var patternEvents = [];
+	for(var j=0;j<pattern.childElementCount;j++){//for each note
+		//basslineTrue ignores the position of the bassline patterns. I don't know what they are for.
+		if (!basslineTrue){ //If the track is not a bassline, add the patterns position to it
+			pattern.children[j].setAttribute("pos", parseInt(pattern.children[j].getAttribute("pos")) + parseInt(pattern.getAttribute("pos"))); 
+			}
+		//^add the note position within the pattern with the pattern position
+		patternEvents.push(//noteon
+			{
+				"typ" : 144,
+				"pos" : parseInt(pattern.children[j].getAttribute("pos")),
+				"key" : parseInt(pattern.children[j].getAttribute("key")),
+				"vol" : parseInt(pattern.children[j].getAttribute("vol")),
+			}
+		)
+		var noteLength = parseInt(pattern.children[j].getAttribute("len"));
+		noteLength = noteLength < 0 ? 1 : noteLength; //Baselines use -192 for note length
+		patternEvents.push(//noteoff
+			{
+				"typ" : 128,
+				"pos" : parseInt(pattern.children[j].getAttribute("pos")) + noteLength,
+				"key" : parseInt(pattern.children[j].getAttribute("key")),
+				"vol" : parseInt(pattern.children[j].getAttribute("vol")),
+			}
+		)
+	}//end for each note
+	return patternEvents;
+}
+	
+function makeTrackString(events){
+	var lastPos = 0; //set the last pos to zero for calculating relative offset
+	var outputString = '';
+	for(var i=0;i<events.length;i++){//for each event
+		//Concatenate all the parts \/
+		var thisBit = getVariableLength(parseInt(events[i].pos - lastPos)) + //relative position
+		c(events[i].typ) + 
+		c(events[i].key) +
+		c(events[i].vol);
+		outputString += thisBit;//add the event to the trackstring
+		lastPos = events[i].pos;// update the last position
+	}//end for each event
+	return outputString;
+}
+	
+function addTrackNames(track){
+	var trackName = track.getAttribute("name"); 
+	var trackstring = '';
+	trackName = trackName.replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, '');// Strip to ASCII
+	trackstring += c(0);// position 0;
+	trackstring += c(255) + c(3) + getVariableLength(trackName.length) + trackName; //FF 03 <len> <text> - track name
+	return trackstring;
+}
+function removeNonNoteTracks(tracks){
+	for(var i=tracks.length-1; i>=0; i--){
+		var trackType = tracks[i].getAttribute("type");
+		if(trackType != 0){tracks.splice(i,1);} //remove different types of pattern
+	}
+}
+
+function convert_mmp_midi(strdata){
+	var events = []; //list of all the events per track
+	var trackBits = ""; //the string of bytes for each track
+	var finalFile = ""; //the string of bytes for the final file
+	var headerString = ""; //the string of bytes for the header
+	var headerBits = [];
+	var lmmsDoc = $.parseXML(strdata); //convert the file to xml
+	var lmmsfile = $(lmmsDoc); //convert it to jQuery
+	tracks = lmmsfile.find("song > trackcontainer > track" ); // find all the tracks in it
+	tracksBB = lmmsfile.find("bbtrack > trackcontainer > track" ); // find all the tracks in basslines- These are the actual tracks that have VSTs
+	basslineTracks = []// The tracks that have basslines on - These are the tracks in the main arrangement view
+	//If the track is type1 (bassline) or type5 (automation)  or type6 (sample) ignore it:
+	for(var i=0; i<tracks.length; i++){
+		var trackType = tracks[i].getAttribute("type");
+		if(trackType == 1){basslineTracks.push(tracks[i]);} //Add to list of tracks with basslines on
+	}
+	removeNonNoteTracks(tracks);
+	removeNonNoteTracks(tracksBB);
+	var numOfTracks = tracks.length + tracksBB.length + 1; //find the number of tracks to be added into the header - add one for tempo track
+	//var numOfTracks = tracks.length + 1;
+	
+	/* ----- Make header-------*/
+	headerBits.push("77 84 104 100 ")//MThd
+	headerBits.push("0 0 0 6 ")//header size
+	headerBits.push("0 1 ")//midi type: 1
+	headerBits.push("0 " + numOfTracks + " ")//number of tracks
+	headerBits.push("0 48 ")//delta timing
+
+	for(var i = 0; i<headerBits.length; i++){
+		headerString += headerBits[i];
+	}
+
+	headerBits = headerString.trim().split(" "); 
+	for(var i = 0; i<headerBits.length; i++){
+		finalFile += c(headerBits[i]);
+	}
+
+	/*----------Add Tempo and Signature ----------------------*/
+	var fileHead = lmmsfile.find("head")[0];
+	trackBits += c(0);// position 0;
+	trackBits += c(255) + c(81) + c(3); // FF 51 03  tt tt tt - 60,000,000 / BPM - midi tempo
+	trackBits += getBytesFromNum(Math.round(60000000 / fileHead.getAttribute("bpm")),3);
+	trackBits += c(0);// position 0;
+	trackBits += c(255) + c(88) + c(4); //FF 58 04 NUM DEN 24 8
+	trackBits += c(fileHead.getAttribute("timesig_numerator") || 0);
+	trackBits += c(Math.round(Math.log2(fileHead.getAttribute("timesig_denominator") || 0)));
+	trackBits += c(24) + c(8); //other parts of time sig event
+	finalFile += endTrack(trackBits);
+	
+	/* ----- For each track: -------*/
+	for(var h=0;h<tracks.length;h++){ //for each track
+		trackBits = ""; //clear the string per track
+		trackBits += addTrackNames(tracks[h]);
+		if ((tracks[h].getAttribute('muted') == 0) || exportMutedBool){
+			/*----------Add Events----------------------*/
+			patterns = tracks[h].getElementsByTagName( "pattern" )//find the patterns
+			events = []; //clear all events;
+			for(var i=0;i<patterns.length;i++){//for each pattern
+				if ((patterns[i].getAttribute('muted') == 0) || exportMutedBool){//If the pattern is not muted
+					var trackEvents = getAllNotesInPattern(patterns[i]);
+					for(var j=0;j<trackEvents.length;j++){
+						events.push(trackEvents[j]);
+					}
+				}
+			}//end for each pattern
+			events.sort(function(a, b) {
+				return parseFloat(a.pos) - parseFloat(b.pos);
+			});
+			trackBits += makeTrackString(events);
+		}
+		finalFile += endTrack(trackBits);
+	}//end for each track
+	
+	/* ----- Get the longest bassline in each track -------*/
+	//the length of each bassline (tracksBB) is the length of the longest pattern within it.
+	var longestPatternLengthInBasslines = [];
+	for(var h=0;h<tracksBB.length;h++){
+		var BBPatterns = tracksBB[h].getElementsByTagName( "pattern" ); //Get all the patterns on each track
+		for (var i=0;i<BBPatterns.length;i++){
+			var length = BBPatterns[i].getAttribute( "len" );
+			if (h == 0){
+				longestPatternLengthInBasslines[i] = length;
+			}
+			else{
+				longestPatternLengthInBasslines[i] = Math.max(longestPatternLengthInBasslines[i],length)
+			}	
+		}
+	}
+	
+	/* ----- For each bassline track: -------*/
+	for(var h=0;h<tracksBB.length;h++){ //for each bassline track which will appear as a final track 
+		trackBits = ""; //clear the string per track
+		
+		/*---------------------- Add Track Names ----------------------*/
+		trackBits += addTrackNames(tracksBB[h]);
+
+		events = []; //clear all events;
+		var BBPatterns = tracksBB[h].getElementsByTagName( "pattern" );//find the patterns (set of notes that is looped)
+		var trackPatterns = [];
+		for(var i=0;i<BBPatterns.length;i++){//for each set of notes that is looped
+			if ((BBPatterns[i].getAttribute('muted') == 0) || exportMutedBool){//If the pattern is not muted
+				trackPatterns[i] = getAllNotesInPattern(BBPatterns[i],true);
+			}
+			else {trackPatterns[i] = [];}
+		}//end for each pattern
+		for(var i=0;i<basslineTracks.length;i++){//for each separate unique bassline in the project - the tracks that appear in the main arrangement view
+			if ((basslineTracks[i].getAttribute('muted') == 0) || exportMutedBool){//If the track is not muted
+				var bbtco = basslineTracks[i].getElementsByTagName( "bbtco" );
+				for(var j=0;j<bbtco.length;j++){//for each loop in each bassline
+					if ((bbtco[j].getAttribute('muted') == 0) || exportMutedBool){//If the loop is not muted
+						//get the length of the longest one
+						//for (var k=0; k<basslineTracks
+						var multiplier = Math.ceil(bbtco[j].getAttribute( "len" ) / longestPatternLengthInBasslines[i]); //how many times to multiply the pattern by before cutting it down
+						if(multiplier==Infinity) multiplier=1;
+						for (var k=0; k<multiplier; k++){//Do a multiplier action multiple times
+							if(k>10000){ //Infinity
+								throw "Infinity loop from multiplier";break;
+							}
+							for (var l=0; l<trackPatterns[i].length; l++){//for each event:
+								var noteToAdd = JSON.parse(JSON.stringify(trackPatterns[i][l]));
+								noteToAdd.pos += 1 * bbtco[j].getAttribute( "pos" );
+								noteToAdd.pos += k * longestPatternLengthInBasslines[i];
+								var cutoff = parseInt(bbtco[j].getAttribute( "pos" )) + parseInt(bbtco[j].getAttribute( "len" ));
+								if (noteToAdd.pos < cutoff && noteToAdd.typ == 144){//note on
+									events[events.length] = noteToAdd;
+								}
+								else if (noteToAdd.pos <= cutoff && noteToAdd.typ == 128){//note ff
+									events[events.length] = noteToAdd;
+								}
+							}// end for each event
+						}//end for each multiplier
+					}//end for each loop
+				}//if the loop is not muted
+			}//end if the track is notmuted
+		}//end for each bassline track
+		events.sort(function(a, b) {return parseFloat(a.pos) - parseFloat(b.pos);});
+		trackBits += makeTrackString(events);
+		finalFile += endTrack(trackBits); //Add this back after testing
+	}//end for each bassline track that appears as a final track
+	return finalFile;
+}//end process file
+
+
+function html_entity_encode(str){
+	if (!str || !str.replace) str='';
+  str = str.replace(/&/gi, "&amp;");
+  str = str.replace(/>/gi, "&gt;");
+  str = str.replace(/</gi, "&lt;");
+  str = str.replace(/\"/gi, "&quot;");
+  str = str.replace(/\'/gi, "&#039;");
+  return str;
+}
+var henc=html_entity_encode;
+function shortstring(s,len){
+	if (!s) s='';
+	if (s.length > len) s=s.substr(0,len)+"...";
+	return s;
+}
+
+//convert
+function mod_load(gdata, callback, errcallback){
+try{
+	var data=gdata.buffer;
+	var maxsize=2;
+	if(gdata.resp.fileSize>maxsize*1024*1024){
+		errcallback('<font class=error>Error. The maximum size is about '+maxsize+' megabytes available.</font>');			
+		return;
+	}
+	if(/(\.mmpz)$/i.test(gdata.resp.title)){
+		if(data.slice){
+			var data2=data.slice(4, data.length);
+		}else{
+			var data2=new Uint8Array(data.buffer.slice(4, data.length));
+		}
+		//console.log(data2);
+		var uncompressed=pako.inflate(data2);
+		//console.log(uncompressed);
+		var blob=new Blob([uncompressed]);
+	}else{
+		var blob=new Blob([data]);
+	}
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		try{
+			//console.log(e.target.result);
+			var raw=convert_mmp_midi(e.target.result);
+		
+			var rawLength = raw.length;
+			var array = new Uint8Array(new ArrayBuffer(rawLength));
+			for(i = 0; i < rawLength; i++) {
+				array[i] = raw.charCodeAt(i);
+			}
+			//console.log(array);
+			callback(array);
+		}catch(err){
+			errcallback('<font class=error>Error. This file format does not support. '+henc(shortstring(err+'',100))+'</font>');
+		}
+	}
+	reader.readAsText(blob);
+}catch(err){
+	errcallback('<font class=error>Error. This file format does not support. '+henc(shortstring(err+'',100))+'</font>');
+}
+}
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mmp.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+</html>

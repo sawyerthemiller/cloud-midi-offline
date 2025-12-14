@@ -1,0 +1,86 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mod.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+<head>
+<script>
+if(self===top){
+	top.location='index.html';
+}
+window['libopenmpt'] = {'TOTAL_MEMORY':48*1024*1024};
+
+var player;
+var modbuffer='';
+var SAMPLE_RATE=44100;
+libopenmpt.onRuntimeInitialized = function(){
+	player = new ChiptuneJsPlayer(new ChiptuneJsConfig(-1));
+};
+</script>
+<script type="text/javascript" src="js/2/mod.js"></script>
+<script type="text/javascript" src="midi/libopenmpt.js"></script>
+</head>
+<body>
+
+<script>
+function mod_load(value,end_callback){
+	if(!player){
+		alert('This browser does not support.');
+		return;
+	}
+	modbuffer=value;
+	player.clearHandler();
+	player.onEnded(function(){
+		if(end_callback) end_callback();
+	});
+	player.onError(function(){
+		if(end_callback) end_callback(true);
+	});
+	player.load('');
+}
+function mod_play(){	
+	if(modbuffer){
+		if(!player)return;
+		//console.log(modbuffer);
+		player.play(modbuffer);
+	}
+}
+function mod_stop(){
+	if(!player)return;
+	player.stop();
+}
+function mod_paused(){
+	if(!player)return;
+	return player.paused();
+}
+function mod_togglePause(){
+	if(!player)return;
+	player.togglePause();
+}
+function mod_get_position(){
+	if(!player)return;
+	var t=player.getPosition() || 0;
+	//console.log(t+'/'+player.duration());
+	t=t*SAMPLE_RATE;
+	return t;	
+}
+function mod_set_position(value){
+	if(!player)return;
+	var t=value/SAMPLE_RATE;
+	player.seek(t);
+}
+function mod_length(){
+	if(!player)return;
+	var t=player.duration();
+	t=t*SAMPLE_RATE;
+	return t;
+}
+function mod_set_volume(value){
+	if(!player)return;
+	player.setVolume(value);
+}
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/mod.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:17 GMT -->
+</html>

@@ -1,0 +1,105 @@
+<html>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/musicxml.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:18 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="js/xml2midib73c.js?t=1"></script>
+<script src="http://iblogbox.github.io/js/zip/jsziptools.js"></script>
+</head>
+<body>
+<script>
+if(self===top){
+	top.location='index.html';
+}
+
+function html_entity_encode(str){
+	if (!str || !str.replace) str='';
+  str = str.replace(/&/gi, "&amp;");
+  str = str.replace(/>/gi, "&gt;");
+  str = str.replace(/</gi, "&lt;");
+  str = str.replace(/\"/gi, "&quot;");
+  str = str.replace(/\'/gi, "&#039;");
+  return str;
+}
+var henc=html_entity_encode;
+function shortstring(s,len){
+	if (!s) s='';
+	if (s.length > len) s=s.substr(0,len)+"...";
+	return s;
+}
+
+//convert
+function mod_load(gdata, callback, errcallback){
+	function error(s){
+		errcallback('<font class=error>'+henc(shortstring(s+'',100))+'</font>');		
+	}
+	function go1(data){
+		try{
+			var blob = new Blob([data]);
+			var reader = new FileReader();
+			reader.onload=function(e){
+				try{
+					var rdata=XML2MIDI.getMIDI(e.target.result);
+					var arr=new Uint8Array(rdata);
+					if(arr.length>0){
+						callback(arr);
+					}else{
+						error('Failed to create a midi file.');
+					}
+				}catch(err){
+					error(err+'');
+				}		
+			}
+			reader.onerror=function(){
+				error('File Read Error.');
+			}
+			reader.readAsText(blob);
+		}catch(err){
+			error(err+'');
+		}
+	}
+
+	if(gdata.buffer && gdata.buffer[0]==0x50 && gdata.buffer[1]==0x4B){
+		try{
+			jz.zip.unpack({buffer: gdata.buffer}).then(function(reader){
+				var lastsize=0;
+				var lastname='';
+				for(var i = 0; i < reader.files.length; i++){ 
+					if(/\.(musicxml)$/i.test(reader.files[i].filename) && reader.files[i].uncompsize>lastsize){
+						lastsize=reader.files[i].uncompsize;
+						lastname=reader.files[i].filename;						
+					}
+				}
+				if(!lastname){
+					lastsize=0;
+					for(var i = 0; i < reader.files.length; i++){ 
+						if(/\.(xml)$/i.test(reader.files[i].filename) && reader.files[i].uncompsize>lastsize){
+							lastsize=reader.files[i].uncompsize;
+							lastname=reader.files[i].filename;						
+						}
+					}
+				}
+				if(lastname){
+					reader.readFileAsArrayBuffer(lastname).then(function(buffer){
+						//console.log(lastname, buffer);
+						go1(buffer);
+					});
+				}else{
+					error('Failed to find a musicxml file.');
+				}
+			});
+		}catch(err){
+			error(err+'');
+		}
+	}else{
+		go1(gdata.buffer);
+	}	
+}
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4f87ce9e51b0462e8e19210addbb1af7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from midiplayer.ehubsoft.net/musicxml.php by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Dec 2025 09:13:18 GMT -->
+</html>
