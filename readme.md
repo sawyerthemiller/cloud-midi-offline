@@ -13,3 +13,4 @@
 ## Warnings
 - ❌ This must be hosted with a web server of sorts. Just opening the html files will not work
 - ❌ If you get stuck on 'loading library' while offline, quit your browser and try again
+- ❌ Absolutely no copyright infringement is intended. This project uses local copies of all files only available to the user at runtime and never requests anything else from the developer's server.
