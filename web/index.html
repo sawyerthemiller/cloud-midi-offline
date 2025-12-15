@@ -1606,7 +1606,7 @@ XSM: eXtra Simple Music by Davey W Taylor</textarea>
 				if (gainNode) gainNode.gain.value = (value / 16383) * 2.2;
 			},
 			loadMidiFile: function (value) {
-				midiName = 'temp.html'; //Math.floor((Math.random() * 1000000) + 1)
+				midiName = 'temp.mid'; //Math.floor((Math.random() * 1000000) + 1)
 				try {
 					FS.writeFile('/freepats/' + midiName, value, { encoding: 'binary' });
 				} catch (err) {
